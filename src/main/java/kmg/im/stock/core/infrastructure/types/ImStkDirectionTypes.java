@@ -5,25 +5,25 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * コード種類の種類<br>
+ * 投資株式方向の種類<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public enum CodeKindTypes implements Supplier<Long> {
+public enum ImStkDirectionTypes implements Supplier<String> {
 
     /* 定義：開始 */
 
     /** 指定無し */
-    NONE("指定無し", -1),
+    NONE("指定無し", null),
 
-    /** 期間の種類 */
-    TYPE_OF_PERIOD("期間の種類", 1),
+    /** 買い */
+    LONG("買い", "long"),
 
-    /** 指標の種類 */
-    INDICATOR_TYPE("指標の種類", 2),
+    /** 売り */
+    SHORT("売り", "short"),
 
     /* 定義：終了 */
     ;
@@ -32,16 +32,16 @@ public enum CodeKindTypes implements Supplier<Long> {
     private String name;
 
     /** 値 */
-    private Long value;
+    private String value;
 
     /** 種類のマップ */
-    private static final Map<Long, CodeKindTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<String, ImStkDirectionTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final CodeKindTypes type : CodeKindTypes.values()) {
-            CodeKindTypes.VALUES_MAP.put(type.get(), type);
+        for (final ImStkDirectionTypes type : ImStkDirectionTypes.values()) {
+            ImStkDirectionTypes.VALUES_MAP.put(type.get(), type);
         }
     }
 
@@ -56,7 +56,7 @@ public enum CodeKindTypes implements Supplier<Long> {
      * @param value
      *              値
      */
-    CodeKindTypes(final String name, final long value) {
+    ImStkDirectionTypes(final String name, final String value) {
 
         this.name = name;
         this.value = value;
@@ -76,9 +76,9 @@ public enum CodeKindTypes implements Supplier<Long> {
      *              値
      * @return 種類。指定無し（NONE）：値が存在しない場合。
      */
-    public static CodeKindTypes getEnum(final Long value) {
+    public static ImStkDirectionTypes getEnum(final String value) {
 
-        CodeKindTypes result = CodeKindTypes.VALUES_MAP.get(value);
+        ImStkDirectionTypes result = ImStkDirectionTypes.VALUES_MAP.get(value);
         if (result == null) {
             result = NONE;
             return result;
@@ -94,9 +94,9 @@ public enum CodeKindTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return 初期値
      */
-    public static CodeKindTypes getInitValue() {
+    public static ImStkDirectionTypes getInitValue() {
 
-        final CodeKindTypes result = NONE;
+        final ImStkDirectionTypes result = NONE;
         return result;
 
     }
@@ -109,9 +109,9 @@ public enum CodeKindTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return デフォルト値
      */
-    public static CodeKindTypes getDefault() {
+    public static ImStkDirectionTypes getDefault() {
 
-        final CodeKindTypes result = NONE;
+        final ImStkDirectionTypes result = NONE;
         return result;
     }
 
@@ -125,7 +125,7 @@ public enum CodeKindTypes implements Supplier<Long> {
      */
     @Override
     public String toString() {
-        final String result = this.value.toString();
+        final String result = this.value;
         return result;
     }
 
@@ -150,8 +150,8 @@ public enum CodeKindTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return 値
      */
-    public Long getValue() {
-        final long result = this.value;
+    public String getValue() {
+        final String result = this.value;
         return result;
     }
 
@@ -164,9 +164,8 @@ public enum CodeKindTypes implements Supplier<Long> {
      * @return 種類の値
      */
     @Override
-    public Long get() {
-        final long result = this.value;
+    public String get() {
+        final String result = this.value;
         return result;
     }
-
 }

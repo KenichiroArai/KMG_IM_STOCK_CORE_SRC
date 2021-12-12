@@ -19,7 +19,7 @@ import kmg.im.stock.core.domain.model.impl.StockPriceCalcValueModelImpl;
 import kmg.im.stock.core.domain.model.impl.StockPriceTimeSeriesModelImpl;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
-import kmg.im.stock.core.infrastructure.types.StockPriceCalcValueTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
 
 /**
  * シミュレーションロジック<br>
@@ -115,20 +115,21 @@ public class SimLogicImpl implements SimLogic {
             }
 
             // 株価計算値を設定する
-            // 株価計算値の種類の種類を取得する
-            final StockPriceCalcValueTypeTypes stockPriceCalcValueTypeTypes = StockPriceCalcValueTypeTypes
+            // 投資株式株価計算値の種類の種類を取得する
+            final ImStkStockPriceCalcValueTypeTypes imStkStockPriceCalcValueTypeTypes = ImStkStockPriceCalcValueTypeTypes
                 .getEnum(simDto.getSpcvtId());
             // 株価計算値モデルを取得する
-            StockPriceCalcValueModel spcvModel = sptsModel.getStockPriceCalcValueModel(stockPriceCalcValueTypeTypes);
+            StockPriceCalcValueModel spcvModel = sptsModel
+                .getStockPriceCalcValueModel(imStkStockPriceCalcValueTypeTypes);
             if (spcvModel == null) {
                 // データがない場合
 
                 // 新規に作成
                 spcvModel = new StockPriceCalcValueModelImpl();
-                sptsModel.addSpcvModel(stockPriceCalcValueTypeTypes, spcvModel);
+                sptsModel.addSpcvModel(imStkStockPriceCalcValueTypeTypes, spcvModel);
             }
             // 株価計算値モデルを設定する
-            spcvModel.setSpcvtId(stockPriceCalcValueTypeTypes); // 株価計算値の種類ID
+            spcvModel.setSpcvtId(imStkStockPriceCalcValueTypeTypes); // 株価計算値の種類ID
             spcvModel.setName(simDto.getSpcvtName()); // 株価計算値の種類名称
             spcvModel.setCalcValue(simDto.getCalcValue()); // 計算値
         }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.function.Supplier;
 
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株価時系列期間の種類モデルインタフェース<br>
@@ -17,14 +17,14 @@ import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
 public interface SptsptModel {
 
     /**
-     * 期間の種類の種類を返す<br>
+     * 投資株式期間の種類の種類を返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return 期間の種類の種類
+     * @return 投資株式期間の種類の種類
      */
-    PeriodTypeTypes getPeriodTypeTypes();
+    ImStkPeriodTypeTypes getImStkPeriodTypeTypes();
 
     /**
      * 株価時系列モデルのマップをクリアする<br>

@@ -12,7 +12,7 @@ import kmg.core.infrastructure.utils.MapUtils;
 import kmg.im.stock.core.domain.model.PowerIndexCalcModel;
 import kmg.im.stock.core.domain.model.SptsptModel;
 import kmg.im.stock.core.domain.model.StockPriceTimeSeriesModel;
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株価時系列期間の種類モデル<br>
@@ -23,9 +23,9 @@ import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
  */
 public class SptsptModelImpl implements SptsptModel {
 
-    // TODO KenichiroArai 2021/09/12 期間の種類の種類の論理名と物理名を株価時系列期間の種類の種類に変更する
-    /** 期間の種類の種類 */
-    private final PeriodTypeTypes periodTypeTypes;
+    // TODO KenichiroArai 2021/09/12 投資株式期間の種類の種類の論理名と物理名を株価時系列投資株式期間の種類の種類に変更する
+    /** 投資株式期間の種類の種類 */
+    private final ImStkPeriodTypeTypes imStkPeriodTypeTypes;
 
     /**
      * 株価時系列モデルのマップ<br>
@@ -42,25 +42,25 @@ public class SptsptModelImpl implements SptsptModel {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param periodTypeTypes
-     *                        期間の種類の種類
+     * @param imStkPeriodTypeTypes
+     *                             投資株式期間の種類の種類
      */
-    public SptsptModelImpl(final PeriodTypeTypes periodTypeTypes) {
+    public SptsptModelImpl(final ImStkPeriodTypeTypes imStkPeriodTypeTypes) {
         this.sptsModelMap = new TreeMap<>();
-        this.periodTypeTypes = periodTypeTypes;
+        this.imStkPeriodTypeTypes = imStkPeriodTypeTypes;
     }
 
     /**
-     * 期間の種類の種類を返す<br>
+     * 投資株式期間の種類の種類を返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return 期間の種類の種類
+     * @return 投資株式期間の種類の種類
      */
     @Override
-    public PeriodTypeTypes getPeriodTypeTypes() {
-        final PeriodTypeTypes result = this.periodTypeTypes;
+    public ImStkPeriodTypeTypes getImStkPeriodTypeTypes() {
+        final ImStkPeriodTypeTypes result = this.imStkPeriodTypeTypes;
         return result;
     }
 

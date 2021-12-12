@@ -5,40 +5,25 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * 株価計算値の種類の種類<br>
+ * 投資株式コード種類の種類<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public enum StockPriceCalcValueTypeTypes implements Supplier<Long> {
+public enum ImStkCodeKindTypes implements Supplier<Long> {
 
     /* 定義：開始 */
 
     /** 指定無し */
-    NONE("指定無し", -1, TechIndicatorTypes.NONE),
+    NONE("指定無し", -1),
 
-    /** ＭＣＡＤライン */
-    MCADL("ＭＣＡＤライン", 1, TechIndicatorTypes.MACD),
+    /** 期間の種類 */
+    TYPE_OF_PERIOD("期間の種類", 1),
 
-    /** ＭＣＡＤシグナル */
-    MCADS("ＭＣＡＤシグナル", 2, TechIndicatorTypes.MACD),
-
-    /** ＭＣＡＤヒストグラム */
-    MCADH("ＭＣＡＤヒストグラム", 3, TechIndicatorTypes.MCADH),
-
-    /** 勢力指数 */
-    PI("勢力指数", 4, TechIndicatorTypes.PI),
-
-    /** 勢力指数２ＥＭＡ */
-    PI2EMA("勢力指数２ＥＭＡ", 5, TechIndicatorTypes.PI),
-
-    /** 勢力指数１３ＥＭＡ */
-    PI13EMA("勢力指数１３ＥＭＡ", 6, TechIndicatorTypes.PI),
-
-    /** 過去３期間の最安値 */
-    LOWEST_PRICE_IN_LAST3_PERIODS("過去３期間の最安値", 7, TechIndicatorTypes.LOWEST_PRICE_IN_PAST),
+    /** 指標の種類 */
+    INDICATOR_TYPE("指標の種類", 2),
 
     /* 定義：終了 */
     ;
@@ -49,17 +34,14 @@ public enum StockPriceCalcValueTypeTypes implements Supplier<Long> {
     /** 値 */
     private Long value;
 
-    /** テクニカル指標の種類 */
-    private TechIndicatorTypes techIndicatorTypes;
-
     /** 種類のマップ */
-    private static final Map<Long, StockPriceCalcValueTypeTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<Long, ImStkCodeKindTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final StockPriceCalcValueTypeTypes type : StockPriceCalcValueTypeTypes.values()) {
-            StockPriceCalcValueTypeTypes.VALUES_MAP.put(type.get(), type);
+        for (final ImStkCodeKindTypes type : ImStkCodeKindTypes.values()) {
+            ImStkCodeKindTypes.VALUES_MAP.put(type.get(), type);
         }
     }
 
@@ -70,17 +52,14 @@ public enum StockPriceCalcValueTypeTypes implements Supplier<Long> {
      * @sine 1.0.0
      * @version 1.0.0
      * @param name
-     *                           名称
+     *              名称
      * @param value
-     *                           値
-     * @param techIndicatorTypes
-     *                           テクニカル指標の種類
+     *              値
      */
-    StockPriceCalcValueTypeTypes(final String name, final long value, final TechIndicatorTypes techIndicatorTypes) {
+    ImStkCodeKindTypes(final String name, final long value) {
 
         this.name = name;
         this.value = value;
-        this.techIndicatorTypes = techIndicatorTypes;
 
     }
 
@@ -97,9 +76,9 @@ public enum StockPriceCalcValueTypeTypes implements Supplier<Long> {
      *              値
      * @return 種類。指定無し（NONE）：値が存在しない場合。
      */
-    public static StockPriceCalcValueTypeTypes getEnum(final Long value) {
+    public static ImStkCodeKindTypes getEnum(final Long value) {
 
-        StockPriceCalcValueTypeTypes result = StockPriceCalcValueTypeTypes.VALUES_MAP.get(value);
+        ImStkCodeKindTypes result = ImStkCodeKindTypes.VALUES_MAP.get(value);
         if (result == null) {
             result = NONE;
             return result;
@@ -115,9 +94,9 @@ public enum StockPriceCalcValueTypeTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return 初期値
      */
-    public static StockPriceCalcValueTypeTypes getInitValue() {
+    public static ImStkCodeKindTypes getInitValue() {
 
-        final StockPriceCalcValueTypeTypes result = NONE;
+        final ImStkCodeKindTypes result = NONE;
         return result;
 
     }
@@ -130,9 +109,9 @@ public enum StockPriceCalcValueTypeTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return デフォルト値
      */
-    public static StockPriceCalcValueTypeTypes getDefault() {
+    public static ImStkCodeKindTypes getDefault() {
 
-        final StockPriceCalcValueTypeTypes result = NONE;
+        final ImStkCodeKindTypes result = NONE;
         return result;
     }
 
@@ -173,19 +152,6 @@ public enum StockPriceCalcValueTypeTypes implements Supplier<Long> {
      */
     public Long getValue() {
         final long result = this.value;
-        return result;
-    }
-
-    /**
-     * テクニカル指標の種類を返す<br>
-     *
-     * @author KenichiroArai
-     * @sine 1.0.0
-     * @version 1.0.0
-     * @return テクニカル指標の種類
-     */
-    public TechIndicatorTypes getTechIndicatorTypes() {
-        final TechIndicatorTypes result = this.techIndicatorTypes;
         return result;
     }
 

@@ -19,7 +19,7 @@ import kmg.im.stock.core.data.dto.SptsptRegDto;
 import kmg.im.stock.core.data.dto.impl.SptsptDeleteCondDtoImpl;
 import kmg.im.stock.core.data.dto.impl.SptsptDtoImpl;
 import kmg.im.stock.core.data.dto.impl.SptsptRegDtoImpl;
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株価時系列期間の種類ＤＡＯ<br>
@@ -35,15 +35,15 @@ public class SptsptDao {
     /** 私自身のクラス */
     private static final Class<?> MYSELF_CLASS = SptsptDao.class;
 
-    /** 株価銘柄ＩＤと期間の種類の種類に該当するデータを削除するＳＱＬパス */
+    /** 株価銘柄ＩＤと投資株式期間の種類の種類に該当するデータを削除するＳＱＬパス */
     private static final SqlPathModel DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH = new SqlPathModelImpl(
-        SptsptDao.MYSELF_CLASS, Paths.get("deleteBySbIdAndPeriodTypeTypes.sql"));
+        SptsptDao.MYSELF_CLASS, Paths.get("deleteBySbIdAndImStkPeriodTypeTypes.sql"));
 
     /** 識別番号を取得するＳＱＬパス */
     private static final SqlPathModel GET_ID_SQL_PATH = new SqlPathModelImpl(SptsptDao.MYSELF_CLASS,
         Paths.get("getId.sql"));
 
-    /** 株銘柄ＩＤと期間の種類の種類を基に挿入するＳＱＬパス */
+    /** 株銘柄ＩＤと投資株式期間の種類の種類を基に挿入するＳＱＬパス */
     private static final SqlPathModel INSERT_BY_SB_ID_AND_PTT_SQL_PATH = new SqlPathModelImpl(SptsptDao.MYSELF_CLASS,
         Paths.get("insertBySbIdAndPtt.sql"));
 
@@ -64,7 +64,7 @@ public class SptsptDao {
     }
 
     /**
-     * 株価銘柄ＩＤと期間の種類の種類に該当するデータを削除する<br>
+     * 株価銘柄ＩＤと投資株式期間の種類の種類に該当するデータを削除する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -72,12 +72,12 @@ public class SptsptDao {
      * @param sbId
      *                        株価銘柄ＩＤ
      * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                        投資株式期間の種類の種類
      * @return 削除数
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      */
-    public long deleteBySbIdAndPeriodTypeTypes(final long sbId, final PeriodTypeTypes periodTypeTypes)
+    public long deleteBySbIdAndImStkPeriodTypeTypes(final long sbId, final ImStkPeriodTypeTypes periodTypeTypes)
         throws KmgDomainException {
 
         long result = 0L;
@@ -103,14 +103,14 @@ public class SptsptDao {
      * @param stockBrandId
      *                        株銘柄ID
      * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                        投資株式期間の種類の種類
      * @param baseDate
      *                        基準日
      * @return 識別番号
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      */
-    public long getId(final long stockBrandId, final PeriodTypeTypes periodTypeTypes, final LocalDate baseDate)
+    public long getId(final long stockBrandId, final ImStkPeriodTypeTypes periodTypeTypes, final LocalDate baseDate)
         throws KmgDomainException {
 
         long result = 0L;
@@ -130,7 +130,7 @@ public class SptsptDao {
     }
 
     /**
-     * 株銘柄ＩＤと期間の種類の種類を基に挿入する<br>
+     * 株銘柄ＩＤと投資株式期間の種類の種類を基に挿入する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -138,12 +138,12 @@ public class SptsptDao {
      * @param sbId
      *             株銘柄ＩＤ
      * @param ptt
-     *             期間の種類の種類
+     *             投資株式期間の種類の種類
      * @return 登録件数
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      */
-    public long insertBySbIdAndPtt(final long sbId, final PeriodTypeTypes ptt) throws KmgDomainException {
+    public long insertBySbIdAndPtt(final long sbId, final ImStkPeriodTypeTypes ptt) throws KmgDomainException {
 
         long result = 0L;
 

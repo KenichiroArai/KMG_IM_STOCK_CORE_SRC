@@ -9,7 +9,7 @@ import kmg.core.infrastructure.utils.ListUtils;
 import kmg.core.infrastructure.utils.MapUtils;
 import kmg.im.stock.core.domain.model.SptsptModel;
 import kmg.im.stock.core.domain.model.StockBrandModel;
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株銘柄モデル<br>
@@ -27,7 +27,7 @@ public class StockBrandModelImpl implements StockBrandModel {
     private long stockBrandCode;
 
     /** 株価時系列期間の種類のマップ */
-    private final SortedMap<PeriodTypeTypes, SptsptModel> sptsptMap;
+    private final SortedMap<ImStkPeriodTypeTypes, SptsptModel> sptsptMap;
 
     /**
      * デフォルトコンストラクタ<br>
@@ -153,7 +153,7 @@ public class StockBrandModelImpl implements StockBrandModel {
      */
     @Override
     public void addSptsptModel(final SptsptModel sptsptModel) {
-        this.sptsptMap.put(sptsptModel.getPeriodTypeTypes(), sptsptModel);
+        this.sptsptMap.put(sptsptModel.getImStkPeriodTypeTypes(), sptsptModel);
     }
 
     /**
@@ -185,23 +185,23 @@ public class StockBrandModelImpl implements StockBrandModel {
      * @return 株価時系列期間の種類モデルのマップ
      */
     @Override
-    public SortedMap<PeriodTypeTypes, SptsptModel> getSptsptModelMap() {
-        final SortedMap<PeriodTypeTypes, SptsptModel> result = this.sptsptMap;
+    public SortedMap<ImStkPeriodTypeTypes, SptsptModel> getSptsptModelMap() {
+        final SortedMap<ImStkPeriodTypeTypes, SptsptModel> result = this.sptsptMap;
         return result;
     }
 
     /**
-     * 期間の種類の種類に該当する株価時系列期間の種類モデルを返す<br>
+     * 投資株式期間の種類の種類に該当する株価時系列期間の種類モデルを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
      * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                        投資株式期間の種類の種類
      * @return 株価時系列期間の種類モデル
      */
     @Override
-    public SptsptModel getSptsptModel(final PeriodTypeTypes periodTypeTypes) {
+    public SptsptModel getSptsptModel(final ImStkPeriodTypeTypes periodTypeTypes) {
         final SptsptModel result = this.sptsptMap.get(periodTypeTypes);
         return result;
     }

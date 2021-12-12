@@ -3,7 +3,7 @@ package kmg.im.stock.core.domain.model;
 import java.util.List;
 import java.util.SortedMap;
 
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株銘柄モデルインタフェース<br>
@@ -115,19 +115,19 @@ public interface StockBrandModel {
      * @version 1.0.0
      * @return 株価時系列期間の種類のマップ
      */
-    SortedMap<PeriodTypeTypes, SptsptModel> getSptsptModelMap();
+    SortedMap<ImStkPeriodTypeTypes, SptsptModel> getSptsptModelMap();
 
     /**
-     * 期間の種類の種類に該当する株価時系列期間の種類モデルを返す<br>
+     * 投資株式期間の種類の種類に該当する株価時系列期間の種類モデルを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param periodTypeTypes
-     *                        期間の種類の種類
+     * @param imStkPeriodTypeTypes
+     *                             投資株式期間の種類の種類
      * @return 株価時系列期間の種類モデル
      */
-    SptsptModel getSptsptModel(final PeriodTypeTypes periodTypeTypes);
+    SptsptModel getSptsptModel(final ImStkPeriodTypeTypes imStkPeriodTypeTypes);
 
     /**
      * 株価時系列期間の種類モデルのリストとして返す<br>

@@ -2,7 +2,7 @@ package kmg.im.stock.core.domain.model;
 
 import java.time.LocalDate;
 
-import kmg.im.stock.core.infrastructure.types.DirectionTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkDirectionTypes;
 
 /**
  * ポジションモデル<br>
@@ -17,7 +17,7 @@ public class PosModel {
     private LocalDate date;
 
     /** 方向 */
-    private DirectionTypes direction;
+    private ImStkDirectionTypes direction;
 
     /**
      * 日付を設定する<br>
@@ -54,7 +54,7 @@ public class PosModel {
      * @param direction
      *                  方向
      */
-    public void setDirection(final DirectionTypes direction) {
+    public void setDirection(final ImStkDirectionTypes direction) {
         this.direction = direction;
     }
 
@@ -66,8 +66,8 @@ public class PosModel {
      * @version 1.0.0
      * @return 方向
      */
-    public DirectionTypes getDirection() {
-        final DirectionTypes result = this.direction;
+    public ImStkDirectionTypes getDirection() {
+        final ImStkDirectionTypes result = this.direction;
         return result;
     }
 

@@ -5,14 +5,14 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * 期間の種類の種類<br>
+ * 投資株式期間の種類の種類<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public enum PeriodTypeTypes implements Supplier<Long> {
+public enum ImStkPeriodTypeTypes implements Supplier<Long> {
 
     /* 定義：開始 */
 
@@ -38,13 +38,13 @@ public enum PeriodTypeTypes implements Supplier<Long> {
     private Long value;
 
     /** 種類のマップ */
-    private static final Map<Long, PeriodTypeTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<Long, ImStkPeriodTypeTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final PeriodTypeTypes type : PeriodTypeTypes.values()) {
-            PeriodTypeTypes.VALUES_MAP.put(type.get(), type);
+        for (final ImStkPeriodTypeTypes type : ImStkPeriodTypeTypes.values()) {
+            ImStkPeriodTypeTypes.VALUES_MAP.put(type.get(), type);
         }
     }
 
@@ -59,7 +59,7 @@ public enum PeriodTypeTypes implements Supplier<Long> {
      * @param value
      *              値
      */
-    PeriodTypeTypes(final String name, final Long value) {
+    ImStkPeriodTypeTypes(final String name, final Long value) {
 
         this.name = name;
         this.value = value;
@@ -79,9 +79,9 @@ public enum PeriodTypeTypes implements Supplier<Long> {
      *              値
      * @return 種類。指定無し（NONE）：値が存在しない場合。
      */
-    public static PeriodTypeTypes getEnum(final Long value) {
+    public static ImStkPeriodTypeTypes getEnum(final Long value) {
 
-        PeriodTypeTypes result = PeriodTypeTypes.VALUES_MAP.get(value);
+        ImStkPeriodTypeTypes result = ImStkPeriodTypeTypes.VALUES_MAP.get(value);
         if (result == null) {
             result = NONE;
             return result;
@@ -97,9 +97,9 @@ public enum PeriodTypeTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return 初期値
      */
-    public static PeriodTypeTypes getInitValue() {
+    public static ImStkPeriodTypeTypes getInitValue() {
 
-        final PeriodTypeTypes result = NONE;
+        final ImStkPeriodTypeTypes result = NONE;
         return result;
 
     }
@@ -112,9 +112,9 @@ public enum PeriodTypeTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return デフォルト値
      */
-    public static PeriodTypeTypes getDefault() {
+    public static ImStkPeriodTypeTypes getDefault() {
 
-        final PeriodTypeTypes result = NONE;
+        final ImStkPeriodTypeTypes result = NONE;
         return result;
     }
 

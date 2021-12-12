@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
-import kmg.im.stock.core.infrastructure.types.StockPriceCalcValueTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
 
 /**
  * 株価時系列モデル<br>
@@ -414,12 +414,12 @@ public interface StockPriceTimeSeriesModel extends Supplier<BigDecimal>, PowerIn
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceCalcValueTypeTypes
-     *                                     株価計算値の種類の種類
+     * @param imStkStockPriceCalcValueTypeTypes
+     *                                          投資株式株価計算値の種類の種類
      * @param stockPriceCalcValueModel
-     *                                     株価計算値モデル
+     *                                          株価計算値モデル
      */
-    void addSpcvModel(final StockPriceCalcValueTypeTypes stockPriceCalcValueTypeTypes,
+    void addSpcvModel(final ImStkStockPriceCalcValueTypeTypes imStkStockPriceCalcValueTypeTypes,
         final StockPriceCalcValueModel stockPriceCalcValueModel);
 
     /**
@@ -428,11 +428,11 @@ public interface StockPriceTimeSeriesModel extends Supplier<BigDecimal>, PowerIn
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceCalcValueTypeTypes
-     *                                     株価計算値の種類の種類
+     * @param imStkStockPriceCalcValueTypeTypes
+     *                                          投資株式株価計算値の種類の種類
      * @return 株価計算値モデル
      */
     StockPriceCalcValueModel getStockPriceCalcValueModel(
-        final StockPriceCalcValueTypeTypes stockPriceCalcValueTypeTypes);
+        final ImStkStockPriceCalcValueTypeTypes imStkStockPriceCalcValueTypeTypes);
 
 }

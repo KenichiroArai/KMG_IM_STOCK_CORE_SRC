@@ -5,40 +5,40 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * コード値の種類<br>
+ * 投資株式株価計算値の種類の種類<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public enum CodeValueTypes implements Supplier<Long> {
+public enum ImStkStockPriceCalcValueTypeTypes implements Supplier<Long> {
 
     /* 定義：開始 */
 
     /** 指定無し */
-    NONE("指定無し", -1, CodeKindTypes.NONE),
+    NONE("指定無し", -1, ImStkTechIndicatorTypes.NONE),
 
-    /** 日足 */
-    DAILY("日足", 1, CodeKindTypes.TYPE_OF_PERIOD),
+    /** ＭＣＡＤライン */
+    MCADL("ＭＣＡＤライン", 1, ImStkTechIndicatorTypes.MACD),
 
-    /** 週足 */
-    WEEKLY("週足", 2, CodeKindTypes.TYPE_OF_PERIOD),
+    /** ＭＣＡＤシグナル */
+    MCADS("ＭＣＡＤシグナル", 2, ImStkTechIndicatorTypes.MACD),
 
-    /** 月足 */
-    MONTHLY("月足", 3, CodeKindTypes.TYPE_OF_PERIOD),
+    /** ＭＣＡＤヒストグラム */
+    MCADH("ＭＣＡＤヒストグラム", 3, ImStkTechIndicatorTypes.MCADH),
 
-    /** トレンドフォロー型 */
-    TREND_FOLLOW_TYPE("トレンドフォロー型", 4, CodeKindTypes.INDICATOR_TYPE),
+    /** 勢力指数 */
+    PI("勢力指数", 4, ImStkTechIndicatorTypes.PI),
 
-    /** オシレーター */
-    OSCILLATOR("オシレーター", 5, CodeKindTypes.INDICATOR_TYPE),
+    /** 勢力指数２ＥＭＡ */
+    PI2EMA("勢力指数２ＥＭＡ", 5, ImStkTechIndicatorTypes.PI),
 
-    /** 計算その他 */
-    CALC_OTHER("計算その他", 6, CodeKindTypes.INDICATOR_TYPE),
+    /** 勢力指数１３ＥＭＡ */
+    PI13EMA("勢力指数１３ＥＭＡ", 6, ImStkTechIndicatorTypes.PI),
 
-    /** 統計 */
-    STATISTICS("統計", 7, CodeKindTypes.INDICATOR_TYPE),
+    /** 過去３期間の最安値 */
+    LOWEST_PRICE_IN_LAST3_PERIODS("過去３期間の最安値", 7, ImStkTechIndicatorTypes.LOWEST_PRICE_IN_PAST),
 
     /* 定義：終了 */
     ;
@@ -49,17 +49,17 @@ public enum CodeValueTypes implements Supplier<Long> {
     /** 値 */
     private Long value;
 
-    /** コード種類の種類 */
-    private CodeKindTypes codeKindTypes;
+    /** テクニカル指標の種類 */
+    private ImStkTechIndicatorTypes techIndicatorTypes;
 
     /** 種類のマップ */
-    private static final Map<Long, CodeValueTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<Long, ImStkStockPriceCalcValueTypeTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final CodeValueTypes type : CodeValueTypes.values()) {
-            CodeValueTypes.VALUES_MAP.put(type.get(), type);
+        for (final ImStkStockPriceCalcValueTypeTypes type : ImStkStockPriceCalcValueTypeTypes.values()) {
+            ImStkStockPriceCalcValueTypeTypes.VALUES_MAP.put(type.get(), type);
         }
     }
 
@@ -70,17 +70,18 @@ public enum CodeValueTypes implements Supplier<Long> {
      * @sine 1.0.0
      * @version 1.0.0
      * @param name
-     *                      名称
+     *                           名称
      * @param value
-     *                      値
-     * @param codeKindTypes
-     *                      コード種類の種類
+     *                           値
+     * @param techIndicatorTypes
+     *                           テクニカル指標の種類
      */
-    CodeValueTypes(final String name, final long value, final CodeKindTypes codeKindTypes) {
+    ImStkStockPriceCalcValueTypeTypes(final String name, final long value,
+        final ImStkTechIndicatorTypes techIndicatorTypes) {
 
         this.name = name;
         this.value = value;
-        this.codeKindTypes = codeKindTypes;
+        this.techIndicatorTypes = techIndicatorTypes;
 
     }
 
@@ -97,9 +98,9 @@ public enum CodeValueTypes implements Supplier<Long> {
      *              値
      * @return 種類。指定無し（NONE）：値が存在しない場合。
      */
-    public static CodeValueTypes getEnum(final Long value) {
+    public static ImStkStockPriceCalcValueTypeTypes getEnum(final Long value) {
 
-        CodeValueTypes result = CodeValueTypes.VALUES_MAP.get(value);
+        ImStkStockPriceCalcValueTypeTypes result = ImStkStockPriceCalcValueTypeTypes.VALUES_MAP.get(value);
         if (result == null) {
             result = NONE;
             return result;
@@ -115,9 +116,9 @@ public enum CodeValueTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return 初期値
      */
-    public static CodeValueTypes getInitValue() {
+    public static ImStkStockPriceCalcValueTypeTypes getInitValue() {
 
-        final CodeValueTypes result = NONE;
+        final ImStkStockPriceCalcValueTypeTypes result = NONE;
         return result;
 
     }
@@ -130,9 +131,9 @@ public enum CodeValueTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return デフォルト値
      */
-    public static CodeValueTypes getDefault() {
+    public static ImStkStockPriceCalcValueTypeTypes getDefault() {
 
-        final CodeValueTypes result = NONE;
+        final ImStkStockPriceCalcValueTypeTypes result = NONE;
         return result;
     }
 
@@ -177,15 +178,15 @@ public enum CodeValueTypes implements Supplier<Long> {
     }
 
     /**
-     * コード種類の種類を返す<br>
+     * テクニカル指標の種類を返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return コード種類の種類
+     * @return テクニカル指標の種類
      */
-    public CodeKindTypes getCodeKindTypes() {
-        final CodeKindTypes result = this.codeKindTypes;
+    public ImStkTechIndicatorTypes getImStkTechIndicatorTypes() {
+        final ImStkTechIndicatorTypes result = this.techIndicatorTypes;
         return result;
     }
 

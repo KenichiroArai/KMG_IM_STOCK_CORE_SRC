@@ -12,7 +12,7 @@ import kmg.im.stock.core.domain.model.StockPriceCalcValueMgtModel;
 import kmg.im.stock.core.domain.model.StockPriceCalcValueModel;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株価計算値ロジック<br>
@@ -41,7 +41,7 @@ public class StockPriceCalcValueLogicImpl implements StockPriceCalcValueLogic {
     }
 
     /**
-     * 株価銘柄ＩＤと期間の種類の種類に該当するデータを削除する<br>
+     * 株価銘柄ＩＤと投資株式期間の種類の種類に該当するデータを削除する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -49,17 +49,17 @@ public class StockPriceCalcValueLogicImpl implements StockPriceCalcValueLogic {
      * @param sbId
      *                        株価銘柄ＩＤ
      * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                        投資株式期間の種類の種類
      * @return 削除数
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public long deleteBySbIdAndPeriodTypeTypes(final long sbId, final PeriodTypeTypes periodTypeTypes)
+    public long deleteBySbIdAndImStkPeriodTypeTypes(final long sbId, final ImStkPeriodTypeTypes periodTypeTypes)
         throws ImStkDomainException {
         long result = 0;
         try {
-            result = this.stockPriceCalcValueDao.deleteByIdCdAndPeriodTypeTypes(sbId, periodTypeTypes);
+            result = this.stockPriceCalcValueDao.deleteByIdCdAndImStkPeriodTypeTypes(sbId, periodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
             final String errMsg = "";

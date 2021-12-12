@@ -18,7 +18,7 @@ import kmg.im.stock.core.domain.service.SimulationService;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.resolver.ImStkLogMessageResolver;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
-import kmg.im.stock.core.infrastructure.types.StockPriceCalcValueTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
 
 /**
  * シミュレーションサービス<br>
@@ -107,12 +107,12 @@ public class SimulationServiceImpl implements SimulationService {
         /* シミュレーションを行う */
         StockPriceTimeSeriesModel preStockPriceTimeSeriesModel = stockPriceTimeSeriesModelList.get(0);
         StockPriceCalcValueModel preStockPriceCalcValueMcadhModel = preStockPriceTimeSeriesModel
-            .getStockPriceCalcValueModel(StockPriceCalcValueTypeTypes.MCADH);
+            .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
         for (int i = 1; i < stockPriceTimeSeriesModelList.size(); i++) {
 
             final StockPriceTimeSeriesModel stockPriceTimeSeriesModel = stockPriceTimeSeriesModelList.get(i);
             final StockPriceCalcValueModel stockPriceCalcValueMcadhModel = stockPriceTimeSeriesModel
-                .getStockPriceCalcValueModel(StockPriceCalcValueTypeTypes.MCADH);
+                .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
 
             try {
                 /* 第一のスクリーン */
@@ -126,7 +126,7 @@ public class SimulationServiceImpl implements SimulationService {
 
                 /* 第二のスクリーン */
                 final StockPriceCalcValueModel stockPriceCalcValuePi2emaModel = stockPriceTimeSeriesModel
-                    .getStockPriceCalcValueModel(StockPriceCalcValueTypeTypes.PI2EMA);
+                    .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.PI2EMA);
                 // 勢力指数２ＥＭＡが中心線よりも上以上か
                 if (stockPriceCalcValuePi2emaModel.get().compareTo(BigDecimal.ZERO) >= 0) {
                     // 上以上である場合
@@ -135,7 +135,7 @@ public class SimulationServiceImpl implements SimulationService {
                     continue;
                 }
                 final StockPriceCalcValueModel stockPriceCalcValueLpil3pModel = stockPriceTimeSeriesModel
-                    .getStockPriceCalcValueModel(StockPriceCalcValueTypeTypes.LOWEST_PRICE_IN_LAST3_PERIODS);
+                    .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.LOWEST_PRICE_IN_LAST3_PERIODS);
                 // 過去３日間の最安値より安値が安いか
                 if (stockPriceCalcValueLpil3pModel.get().compareTo(stockPriceTimeSeriesModel.getLp()) < 0) {
                     // 安い場合
@@ -149,7 +149,7 @@ public class SimulationServiceImpl implements SimulationService {
             } finally {
                 preStockPriceTimeSeriesModel = stockPriceTimeSeriesModelList.get(i);
                 preStockPriceCalcValueMcadhModel = preStockPriceTimeSeriesModel
-                    .getStockPriceCalcValueModel(StockPriceCalcValueTypeTypes.MCADH);
+                    .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
             }
         }
     }

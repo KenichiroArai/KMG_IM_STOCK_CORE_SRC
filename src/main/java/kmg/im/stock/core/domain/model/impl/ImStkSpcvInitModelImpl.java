@@ -3,25 +3,17 @@ package kmg.im.stock.core.domain.model.impl;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
-import org.springframework.stereotype.Service;
-
-import kmg.im.stock.core.domain.model.StockPriceCalcValueModel;
-import kmg.im.stock.core.domain.model.StockPriceTimeSeriesModel;
-import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
+import kmg.im.stock.core.domain.model.ImStkSpcvInitModel;
 
 /**
- * 株価時系列モデル<br>
+ * 投資株式株価計算値初期化モデル<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
-//TODO KenichiroArai 2021/05/28 ベースとなるクラスを作成する
-@Service
-public class StockPriceTimeSeriesModelImpl implements StockPriceTimeSeriesModel {
+public class ImStkSpcvInitModelImpl implements ImStkSpcvInitModel {
 
     /** 識別番号 */
     private long id;
@@ -53,6 +45,9 @@ public class StockPriceTimeSeriesModelImpl implements StockPriceTimeSeriesModel 
     /** 名称 */
     private String name;
 
+    /** 株価時系列期間の種類ID */
+    private long sptsptId;
+
     /** 番号 */
     private long no;
 
@@ -76,20 +71,6 @@ public class StockPriceTimeSeriesModelImpl implements StockPriceTimeSeriesModel 
 
     /** 出来高 */
     private long volume;
-
-    /** 株価計算値モデルのマップ */
-    private final SortedMap<ImStkStockPriceCalcValueTypeTypes, StockPriceCalcValueModel> spcvModelMap;
-
-    /**
-     * デフォルトコンストラクタ<br>
-     *
-     * @author KenichiroArai
-     * @sine 1.0.0
-     * @version 1.0.0
-     */
-    public StockPriceTimeSeriesModelImpl() {
-        this.spcvModelMap = new TreeMap<>();
-    }
 
     /**
      * 識別番号を設定する<br>
@@ -372,6 +353,34 @@ public class StockPriceTimeSeriesModelImpl implements StockPriceTimeSeriesModel 
     }
 
     /**
+     * 株価時系列期間の種類IDを設定する<br>
+     *
+     * @author KenichiroArai
+     * @sine 1.0.0
+     * @version 1.0.0
+     * @param sptsptId
+     *                 株価時系列期間の種類ID
+     */
+    @Override
+    public void setSptsptId(final long sptsptId) {
+        this.sptsptId = sptsptId;
+    }
+
+    /**
+     * 株価時系列期間の種類IDを返す<br>
+     *
+     * @author KenichiroArai
+     * @sine 1.0.0
+     * @version 1.0.0
+     * @return 株価時系列期間の種類ID
+     */
+    @Override
+    public long getSptsptId() {
+        final long result = this.sptsptId;
+        return result;
+    }
+
+    /**
      * 番号を設定する<br>
      *
      * @author KenichiroArai
@@ -606,40 +615,6 @@ public class StockPriceTimeSeriesModelImpl implements StockPriceTimeSeriesModel 
     @Override
     public BigDecimal get() {
         final BigDecimal result = this.cp;
-        return result;
-    }
-
-    /**
-     * 株価計算値モデルを追加する<br>
-     *
-     * @author KenichiroArai
-     * @sine 1.0.0
-     * @version 1.0.0
-     * @param imStkStockPriceCalcValueTypeTypes
-     *                                          投資株式株価計算値の種類の種類
-     * @param stockPriceCalcValueModel
-     *                                          株価計算値モデル
-     */
-    @Override
-    public void addSpcvModel(final ImStkStockPriceCalcValueTypeTypes imStkStockPriceCalcValueTypeTypes,
-        final StockPriceCalcValueModel stockPriceCalcValueModel) {
-        this.spcvModelMap.put(imStkStockPriceCalcValueTypeTypes, stockPriceCalcValueModel);
-    }
-
-    /**
-     * 株価計算値モデルを返す<br>
-     *
-     * @author KenichiroArai
-     * @sine 1.0.0
-     * @version 1.0.0
-     * @param imStkStockPriceCalcValueTypeTypes
-     *                                          投資株式株価計算値の種類の種類
-     * @return 株価計算値モデル
-     */
-    @Override
-    public StockPriceCalcValueModel getStockPriceCalcValueModel(
-        final ImStkStockPriceCalcValueTypeTypes imStkStockPriceCalcValueTypeTypes) {
-        final StockPriceCalcValueModel result = this.spcvModelMap.get(imStkStockPriceCalcValueTypeTypes);
         return result;
     }
 

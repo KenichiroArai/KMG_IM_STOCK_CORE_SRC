@@ -5,25 +5,40 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * 方向の種類<br>
+ * 投資株式コード値の種類<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public enum DirectionTypes implements Supplier<String> {
+public enum ImStkCodeValueTypes implements Supplier<Long> {
 
     /* 定義：開始 */
 
     /** 指定無し */
-    NONE("指定無し", null),
+    NONE("指定無し", -1, ImStkCodeKindTypes.NONE),
 
-    /** 買い */
-    LONG("買い", "long"),
+    /** 日足 */
+    DAILY("日足", 1, ImStkCodeKindTypes.TYPE_OF_PERIOD),
 
-    /** 売り */
-    SHORT("売り", "short"),
+    /** 週足 */
+    WEEKLY("週足", 2, ImStkCodeKindTypes.TYPE_OF_PERIOD),
+
+    /** 月足 */
+    MONTHLY("月足", 3, ImStkCodeKindTypes.TYPE_OF_PERIOD),
+
+    /** トレンドフォロー型 */
+    TREND_FOLLOW_TYPE("トレンドフォロー型", 4, ImStkCodeKindTypes.INDICATOR_TYPE),
+
+    /** オシレーター */
+    OSCILLATOR("オシレーター", 5, ImStkCodeKindTypes.INDICATOR_TYPE),
+
+    /** 計算その他 */
+    CALC_OTHER("計算その他", 6, ImStkCodeKindTypes.INDICATOR_TYPE),
+
+    /** 統計 */
+    STATISTICS("統計", 7, ImStkCodeKindTypes.INDICATOR_TYPE),
 
     /* 定義：終了 */
     ;
@@ -32,16 +47,19 @@ public enum DirectionTypes implements Supplier<String> {
     private String name;
 
     /** 値 */
-    private String value;
+    private Long value;
+
+    /** コード種類の種類 */
+    private ImStkCodeKindTypes codeKindTypes;
 
     /** 種類のマップ */
-    private static final Map<String, DirectionTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<Long, ImStkCodeValueTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final DirectionTypes type : DirectionTypes.values()) {
-            DirectionTypes.VALUES_MAP.put(type.get(), type);
+        for (final ImStkCodeValueTypes type : ImStkCodeValueTypes.values()) {
+            ImStkCodeValueTypes.VALUES_MAP.put(type.get(), type);
         }
     }
 
@@ -52,14 +70,17 @@ public enum DirectionTypes implements Supplier<String> {
      * @sine 1.0.0
      * @version 1.0.0
      * @param name
-     *              名称
+     *                      名称
      * @param value
-     *              値
+     *                      値
+     * @param codeKindTypes
+     *                      コード種類の種類
      */
-    DirectionTypes(final String name, final String value) {
+    ImStkCodeValueTypes(final String name, final long value, final ImStkCodeKindTypes codeKindTypes) {
 
         this.name = name;
         this.value = value;
+        this.codeKindTypes = codeKindTypes;
 
     }
 
@@ -76,9 +97,9 @@ public enum DirectionTypes implements Supplier<String> {
      *              値
      * @return 種類。指定無し（NONE）：値が存在しない場合。
      */
-    public static DirectionTypes getEnum(final String value) {
+    public static ImStkCodeValueTypes getEnum(final Long value) {
 
-        DirectionTypes result = DirectionTypes.VALUES_MAP.get(value);
+        ImStkCodeValueTypes result = ImStkCodeValueTypes.VALUES_MAP.get(value);
         if (result == null) {
             result = NONE;
             return result;
@@ -94,9 +115,9 @@ public enum DirectionTypes implements Supplier<String> {
      * @version 1.0.0
      * @return 初期値
      */
-    public static DirectionTypes getInitValue() {
+    public static ImStkCodeValueTypes getInitValue() {
 
-        final DirectionTypes result = NONE;
+        final ImStkCodeValueTypes result = NONE;
         return result;
 
     }
@@ -109,9 +130,9 @@ public enum DirectionTypes implements Supplier<String> {
      * @version 1.0.0
      * @return デフォルト値
      */
-    public static DirectionTypes getDefault() {
+    public static ImStkCodeValueTypes getDefault() {
 
-        final DirectionTypes result = NONE;
+        final ImStkCodeValueTypes result = NONE;
         return result;
     }
 
@@ -125,7 +146,7 @@ public enum DirectionTypes implements Supplier<String> {
      */
     @Override
     public String toString() {
-        final String result = this.value;
+        final String result = this.value.toString();
         return result;
     }
 
@@ -150,8 +171,21 @@ public enum DirectionTypes implements Supplier<String> {
      * @version 1.0.0
      * @return 値
      */
-    public String getValue() {
-        final String result = this.value;
+    public Long getValue() {
+        final long result = this.value;
+        return result;
+    }
+
+    /**
+     * コード種類の種類を返す<br>
+     *
+     * @author KenichiroArai
+     * @sine 1.0.0
+     * @version 1.0.0
+     * @return コード種類の種類
+     */
+    public ImStkCodeKindTypes getImStkCodeKindTypes() {
+        final ImStkCodeKindTypes result = this.codeKindTypes;
         return result;
     }
 
@@ -164,8 +198,9 @@ public enum DirectionTypes implements Supplier<String> {
      * @return 種類の値
      */
     @Override
-    public String get() {
-        final String result = this.value;
+    public Long get() {
+        final long result = this.value;
         return result;
     }
+
 }

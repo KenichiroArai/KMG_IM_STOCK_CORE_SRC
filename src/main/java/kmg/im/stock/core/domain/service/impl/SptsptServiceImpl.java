@@ -9,7 +9,7 @@ import kmg.im.stock.core.domain.logic.SptsptLogic;
 import kmg.im.stock.core.domain.model.SptsptModel;
 import kmg.im.stock.core.domain.service.SptsptService;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株価時系列期間の種類サービス<br>
@@ -48,18 +48,18 @@ public class SptsptServiceImpl implements SptsptService {
      * @sine 1.0.0
      * @version 1.0.0
      * @param stockBrandId
-     *                        株銘柄ID
-     * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                             株銘柄ID
+     * @param imStkPeriodTypeTypes
+     *                             投資株式期間の種類の種類
      * @return 株価銘柄ID
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public long getSptsptId(final long stockBrandId, final PeriodTypeTypes periodTypeTypes)
+    public long getSptsptId(final long stockBrandId, final ImStkPeriodTypeTypes imStkPeriodTypeTypes)
         throws ImStkDomainException {
 
-        final long result = this.getSptsptId(stockBrandId, periodTypeTypes, LocalDate.now());
+        final long result = this.getSptsptId(stockBrandId, imStkPeriodTypeTypes, LocalDate.now());
         return result;
     }
 
@@ -70,29 +70,29 @@ public class SptsptServiceImpl implements SptsptService {
      * @sine 1.0.0
      * @version 1.0.0
      * @param stockBrandId
-     *                        株銘柄ID
-     * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                             株銘柄ID
+     * @param imStkPeriodTypeTypes
+     *                             投資株式期間の種類の種類
      * @param baseDate
-     *                        基準日
+     *                             基準日
      * @return 株価銘柄ID
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public long getSptsptId(final long stockBrandId, final PeriodTypeTypes periodTypeTypes, final LocalDate baseDate)
-        throws ImStkDomainException {
+    public long getSptsptId(final long stockBrandId, final ImStkPeriodTypeTypes imStkPeriodTypeTypes,
+        final LocalDate baseDate) throws ImStkDomainException {
 
         long result = -1L;
 
-        final Long tmp = this.sptsptLogic.getSptsptId(stockBrandId, periodTypeTypes, baseDate);
+        final Long tmp = this.sptsptLogic.getSptsptId(stockBrandId, imStkPeriodTypeTypes, baseDate);
         if (tmp != null) {
             result = tmp;
             return result;
         }
 
-        this.sptsptLogic.register(stockBrandId, periodTypeTypes);
-        result = this.sptsptLogic.getSptsptId(stockBrandId, periodTypeTypes, baseDate);
+        this.sptsptLogic.register(stockBrandId, imStkPeriodTypeTypes);
+        result = this.sptsptLogic.getSptsptId(stockBrandId, imStkPeriodTypeTypes, baseDate);
 
         return result;
     }
@@ -105,20 +105,20 @@ public class SptsptServiceImpl implements SptsptService {
      * @sine 1.0.0
      * @version 1.0.0
      * @param stockBrandId
-     *                        株銘柄ID
-     * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                             株銘柄ID
+     * @param imStkPeriodTypeTypes
+     *                             投資株式期間の種類の種類
      * @param baseDate
-     *                        基準日
+     *                             基準日
      * @return 株価銘柄ID
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public Map<PeriodTypeTypes, SptsptModel> findSptsptModelMap(final long stockBrandId,
-        final PeriodTypeTypes periodTypeTypes, final LocalDate baseDate) throws ImStkDomainException {
-        final Map<PeriodTypeTypes, SptsptModel> result = this.sptsptLogic.findSptsptModelMap(stockBrandId,
-            periodTypeTypes, baseDate);
+    public Map<ImStkPeriodTypeTypes, SptsptModel> findSptsptModelMap(final long stockBrandId,
+        final ImStkPeriodTypeTypes imStkPeriodTypeTypes, final LocalDate baseDate) throws ImStkDomainException {
+        final Map<ImStkPeriodTypeTypes, SptsptModel> result = this.sptsptLogic.findSptsptModelMap(stockBrandId,
+            imStkPeriodTypeTypes, baseDate);
         return result;
     }
 

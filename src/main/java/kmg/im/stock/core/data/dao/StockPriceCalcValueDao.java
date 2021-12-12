@@ -16,7 +16,7 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.im.stock.core.data.dto.SpcvDeleteCondDto;
 import kmg.im.stock.core.data.dto.StockPriceCalcValueDto;
 import kmg.im.stock.core.data.dto.impl.SpcvDeleteCondDtoImpl;
-import kmg.im.stock.core.infrastructure.types.PeriodTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
  * 株価計算値ＤＡＯ<br>
@@ -32,9 +32,9 @@ public class StockPriceCalcValueDao {
     /** 私自身のクラス */
     private static final Class<?> MYSELF_CLASS = StockPriceCalcValueDao.class;
 
-    /** 株価銘柄ＩＤと期間の種類の種類に該当するデータを削除するＳＱＬパス */
+    /** 株価銘柄ＩＤと投資株式期間の種類の種類に該当するデータを削除するＳＱＬパス */
     private static final SqlPathModel DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH = new SqlPathModelImpl(
-        StockPriceCalcValueDao.MYSELF_CLASS, Paths.get("deleteBySbIdAndPeriodTypeTypes.sql"));
+        StockPriceCalcValueDao.MYSELF_CLASS, Paths.get("deleteBySbIdAndImStkPeriodTypeTypes.sql"));
 
     /** 株価計算値を挿入するＳＱＬパス */
     private static final SqlPathModel INSERT_SQL_PATH = new SqlPathModelImpl(StockPriceCalcValueDao.MYSELF_CLASS,
@@ -57,7 +57,7 @@ public class StockPriceCalcValueDao {
     }
 
     /**
-     * 株価銘柄ＩＤと期間の種類の種類に該当するデータを削除する<br>
+     * 株価銘柄ＩＤと投資株式期間の種類の種類に該当するデータを削除する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -65,12 +65,12 @@ public class StockPriceCalcValueDao {
      * @param sbId
      *                        株価銘柄ＩＤ
      * @param periodTypeTypes
-     *                        期間の種類の種類
+     *                        投資株式期間の種類の種類
      * @return 削除数
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      */
-    public long deleteByIdCdAndPeriodTypeTypes(final long sbId, final PeriodTypeTypes periodTypeTypes)
+    public long deleteByIdCdAndImStkPeriodTypeTypes(final long sbId, final ImStkPeriodTypeTypes periodTypeTypes)
         throws KmgDomainException {
 
         long result = 0L;

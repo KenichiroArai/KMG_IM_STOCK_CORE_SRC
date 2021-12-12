@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import kmg.im.stock.core.domain.model.StockPriceCalcValueModel;
-import kmg.im.stock.core.infrastructure.types.StockPriceCalcValueTypeTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
 
 /**
  * 株価計算値モデル<br>
@@ -49,8 +49,8 @@ public class StockPriceCalcValueModelImpl implements StockPriceCalcValueModel {
     /** 株価計算値ID */
     private Long sptsId;
 
-    /** 株価計算値の種類ID */
-    private StockPriceCalcValueTypeTypes spcvtId;
+    /** 投資株式株価計算値の種類ID */
+    private ImStkStockPriceCalcValueTypeTypes spcvtId;
 
     /** 計算値 */
     private BigDecimal calcValue;
@@ -364,30 +364,30 @@ public class StockPriceCalcValueModelImpl implements StockPriceCalcValueModel {
     }
 
     /**
-     * 株価計算値の種類IDを設定する<br>
+     * 投資株式株価計算値の種類IDを設定する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
      * @param spcvtId
-     *                株価計算値の種類ID
+     *                投資株式株価計算値の種類ID
      */
     @Override
-    public void setSpcvtId(final StockPriceCalcValueTypeTypes spcvtId) {
+    public void setSpcvtId(final ImStkStockPriceCalcValueTypeTypes spcvtId) {
         this.spcvtId = spcvtId;
     }
 
     /**
-     * 株価計算値の種類IDを返す<br>
+     * 投資株式株価計算値の種類IDを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return 株価計算値の種類ID
+     * @return 投資株式株価計算値の種類ID
      */
     @Override
-    public StockPriceCalcValueTypeTypes getSpcvtId() {
-        final StockPriceCalcValueTypeTypes result = this.spcvtId;
+    public ImStkStockPriceCalcValueTypeTypes getSpcvtId() {
+        final ImStkStockPriceCalcValueTypeTypes result = this.spcvtId;
         return result;
     }
 

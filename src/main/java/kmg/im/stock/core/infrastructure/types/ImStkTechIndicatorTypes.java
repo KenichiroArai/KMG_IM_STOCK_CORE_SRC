@@ -5,88 +5,88 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * テクニカル指標の種類<br>
+ * 投資株式テクニカル指標の種類<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public enum TechIndicatorTypes implements Supplier<Long> {
+public enum ImStkTechIndicatorTypes implements Supplier<Long> {
 
     /* 定義：開始 */
 
     /** 指定無し */
-    NONE("指定無し", -1, CodeValueTypes.NONE),
+    NONE("指定無し", -1, ImStkCodeValueTypes.NONE),
 
     /** 単純移動平均（ＳＭＡ） */
-    SMA("単純移動平均（ＳＭＡ）", 1, CodeValueTypes.TREND_FOLLOW_TYPE),
+    SMA("単純移動平均（ＳＭＡ）", 1, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** 指数移動平均（ＥＭＡ） */
-    EMA("指数移動平均（ＥＭＡ）", 2, CodeValueTypes.TREND_FOLLOW_TYPE),
+    EMA("指数移動平均（ＥＭＡ）", 2, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** ＭＡＣＤ */
-    MACD("ＭＡＣＤ", 3, CodeValueTypes.TREND_FOLLOW_TYPE),
+    MACD("ＭＡＣＤ", 3, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** ＭＣＡＤヒストグラム */
-    MCADH("ＭＣＡＤヒストグラム", 4, CodeValueTypes.TREND_FOLLOW_TYPE),
+    MCADH("ＭＣＡＤヒストグラム", 4, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** ディレクショナル・システム */
-    DS("ディレクショナル・システム", 5, CodeValueTypes.TREND_FOLLOW_TYPE),
+    DS("ディレクショナル・システム", 5, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** ＯＢＶ（オン・バランス・ボリューム） */
-    OBV("ＯＢＶ（オン・バランス・ボリューム）", 6, CodeValueTypes.TREND_FOLLOW_TYPE),
+    OBV("ＯＢＶ（オン・バランス・ボリューム）", 6, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** アキュミュレーション */
-    ACCUMULATION("アキュミュレーション", 7, CodeValueTypes.TREND_FOLLOW_TYPE),
+    ACCUMULATION("アキュミュレーション", 7, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** ディストリビューション */
-    DISTRIBUTION("ディストリビューション", 8, CodeValueTypes.TREND_FOLLOW_TYPE),
+    DISTRIBUTION("ディストリビューション", 8, ImStkCodeValueTypes.TREND_FOLLOW_TYPE),
 
     /** ストキャスティック */
-    DTOCASTER("ストキャスティック", 9, CodeValueTypes.OSCILLATOR),
+    DTOCASTER("ストキャスティック", 9, ImStkCodeValueTypes.OSCILLATOR),
 
     /** ＲＯＣ（スムーズ化された価格変化率） */
-    ROC("ＲＯＣ（スムーズ化された価格変化率）", 10, CodeValueTypes.OSCILLATOR),
+    ROC("ＲＯＣ（スムーズ化された価格変化率）", 10, ImStkCodeValueTypes.OSCILLATOR),
 
     /** モメンタム */
-    MOMENTUM("モメンタム", 11, CodeValueTypes.OSCILLATOR),
+    MOMENTUM("モメンタム", 11, ImStkCodeValueTypes.OSCILLATOR),
 
     /** ＲＳＩ（相対力指数） */
-    RSI("ＲＳＩ（相対力指数）", 12, CodeValueTypes.OSCILLATOR),
+    RSI("ＲＳＩ（相対力指数）", 12, ImStkCodeValueTypes.OSCILLATOR),
 
     /** エルダー線 */
-    EL("エルダー線", 13, CodeValueTypes.OSCILLATOR),
+    EL("エルダー線", 13, ImStkCodeValueTypes.OSCILLATOR),
 
     /** 勢力指数 */
-    PI("勢力指数", 14, CodeValueTypes.OSCILLATOR),
+    PI("勢力指数", 14, ImStkCodeValueTypes.OSCILLATOR),
 
     /** ウィリアムズの％Ｒ */
-    WMPR("ウィリアムズの％Ｒ", 15, CodeValueTypes.OSCILLATOR),
+    WMPR("ウィリアムズの％Ｒ", 15, ImStkCodeValueTypes.OSCILLATOR),
 
     /** コモディティー・チャネル指数 */
-    CCI("コモディティー・チャネル指数", 16, CodeValueTypes.OSCILLATOR),
+    CCI("コモディティー・チャネル指数", 16, ImStkCodeValueTypes.OSCILLATOR),
 
     /** 新高値―新安値指数 */
-    NHNLI("新高値―新安値指数", 17, CodeValueTypes.CALC_OTHER),
+    NHNLI("新高値―新安値指数", 17, ImStkCodeValueTypes.CALC_OTHER),
 
     /** プット―コール比率 */
-    PCR("プット―コール比率", 18, CodeValueTypes.CALC_OTHER),
+    PCR("プット―コール比率", 18, ImStkCodeValueTypes.CALC_OTHER),
 
     /** 強気のコンセンサス */
-    BC("強気のコンセンサス", 19, CodeValueTypes.CALC_OTHER),
+    BC("強気のコンセンサス", 19, ImStkCodeValueTypes.CALC_OTHER),
 
     /** ＣｏＴ（コミットメント・オブ・トレーダーズ） */
-    COT("ＣｏＴ（コミットメント・オブ・トレーダーズ）", 20, CodeValueTypes.CALC_OTHER),
+    COT("ＣｏＴ（コミットメント・オブ・トレーダーズ）", 20, ImStkCodeValueTypes.CALC_OTHER),
 
     /** 騰落指数 */
-    RFI("騰落指数", 21, CodeValueTypes.CALC_OTHER),
+    RFI("騰落指数", 21, ImStkCodeValueTypes.CALC_OTHER),
 
     /** トレーダー指数 */
-    TI("トレーダー指数", 22, CodeValueTypes.CALC_OTHER),
+    TI("トレーダー指数", 22, ImStkCodeValueTypes.CALC_OTHER),
 
     /** 過去の最安値 */
-    LOWEST_PRICE_IN_PAST("過去の最安値", 23, CodeValueTypes.CALC_OTHER),
+    LOWEST_PRICE_IN_PAST("過去の最安値", 23, ImStkCodeValueTypes.CALC_OTHER),
 
     /* 定義：終了 */
     ;
@@ -98,16 +98,16 @@ public enum TechIndicatorTypes implements Supplier<Long> {
     private Long value;
 
     /** コード値の種類 */
-    private CodeValueTypes codeValueTypes;
+    private ImStkCodeValueTypes codeValueTypes;
 
     /** 種類のマップ */
-    private static final Map<Long, TechIndicatorTypes> VALUES_MAP = new HashMap<>();
+    private static final Map<Long, ImStkTechIndicatorTypes> VALUES_MAP = new HashMap<>();
 
     static {
 
         /* 種類のマップにプット */
-        for (final TechIndicatorTypes type : TechIndicatorTypes.values()) {
-            TechIndicatorTypes.VALUES_MAP.put(type.get(), type);
+        for (final ImStkTechIndicatorTypes type : ImStkTechIndicatorTypes.values()) {
+            ImStkTechIndicatorTypes.VALUES_MAP.put(type.get(), type);
         }
     }
 
@@ -124,7 +124,7 @@ public enum TechIndicatorTypes implements Supplier<Long> {
      * @param codeValueTypes
      *                       コード値の種類
      */
-    TechIndicatorTypes(final String name, final long value, final CodeValueTypes codeValueTypes) {
+    ImStkTechIndicatorTypes(final String name, final long value, final ImStkCodeValueTypes codeValueTypes) {
 
         this.name = name;
         this.value = value;
@@ -145,9 +145,9 @@ public enum TechIndicatorTypes implements Supplier<Long> {
      *              値
      * @return 種類。指定無し（NONE）：値が存在しない場合。
      */
-    public static TechIndicatorTypes getEnum(final Long value) {
+    public static ImStkTechIndicatorTypes getEnum(final Long value) {
 
-        TechIndicatorTypes result = TechIndicatorTypes.VALUES_MAP.get(value);
+        ImStkTechIndicatorTypes result = ImStkTechIndicatorTypes.VALUES_MAP.get(value);
         if (result == null) {
             result = NONE;
             return result;
@@ -163,9 +163,9 @@ public enum TechIndicatorTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return 初期値
      */
-    public static TechIndicatorTypes getInitValue() {
+    public static ImStkTechIndicatorTypes getInitValue() {
 
-        final TechIndicatorTypes result = NONE;
+        final ImStkTechIndicatorTypes result = NONE;
         return result;
 
     }
@@ -178,9 +178,9 @@ public enum TechIndicatorTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return デフォルト値
      */
-    public static TechIndicatorTypes getDefault() {
+    public static ImStkTechIndicatorTypes getDefault() {
 
-        final TechIndicatorTypes result = NONE;
+        final ImStkTechIndicatorTypes result = NONE;
         return result;
     }
 
@@ -232,8 +232,8 @@ public enum TechIndicatorTypes implements Supplier<Long> {
      * @version 1.0.0
      * @return コード値の種類
      */
-    public CodeValueTypes getCodeValueTypes() {
-        final CodeValueTypes result = this.codeValueTypes;
+    public ImStkCodeValueTypes getImStkCodeValueTypes() {
+        final ImStkCodeValueTypes result = this.codeValueTypes;
         return result;
     }
 
