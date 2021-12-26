@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 import kmg.core.domain.model.SqlPathModel;
 import kmg.core.domain.model.impl.SqlPathModelImpl;
 import kmg.core.infrastructure.exception.KmgDomainException;
-import kmg.im.stock.core.data.dto.SimDto;
-import kmg.im.stock.core.data.dto.StockBrandDto;
-import kmg.im.stock.core.data.dto.impl.SimDtoImpl;
-import kmg.im.stock.core.data.dto.impl.StockBrandDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkSimDto;
+import kmg.im.stock.core.data.dto.ImStkStockBrandDto;
+import kmg.im.stock.core.data.dto.impl.ImStkSimDtoImpl;
+import kmg.im.stock.core.data.dto.impl.ImStkStockBrandDtoImpl;
 
 /**
  * 投資株式シミュレーションＤＡＯ<br>
@@ -56,23 +56,23 @@ public class ImStkSimDao {
      * @version 1.0.0
      * @param stockCode
      *                  株価コード
-     * @return シミュレーションＤＴＯのリスト
+     * @return 投資株式シミュレーションＤＴＯのリスト
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      */
-    public List<SimDto> find(final long stockCode) throws KmgDomainException {
+    public List<ImStkSimDto> find(final long stockCode) throws KmgDomainException {
 
-        List<SimDto> result = null;
+        List<ImStkSimDto> result = null;
 
         /* パラメータを設定する */
-        final StockBrandDto stockBrandDto = new StockBrandDtoImpl();
-        stockBrandDto.setCode(stockCode);
+        final ImStkStockBrandDto imStkStockBrandDto = new ImStkStockBrandDtoImpl();
+        imStkStockBrandDto.setCode(stockCode);
 
         /* DBを実行する */
-        final SqlParameterSource params = new BeanPropertySqlParameterSource(stockBrandDto);
-        final List<SimDtoImpl> tmp = this.jdbc.query(ImStkSimDao.FIND_SQL_PATH.toSql(), params,
-            BeanPropertyRowMapper.newInstance(SimDtoImpl.class));
-        result = tmp.stream().map(mapper -> (SimDto) mapper).collect(Collectors.toList());
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(imStkStockBrandDto);
+        final List<ImStkSimDtoImpl> tmp = this.jdbc.query(ImStkSimDao.FIND_SQL_PATH.toSql(), params,
+            BeanPropertyRowMapper.newInstance(ImStkSimDtoImpl.class));
+        result = tmp.stream().map(mapper -> (ImStkSimDto) mapper).collect(Collectors.toList());
 
         return result;
 

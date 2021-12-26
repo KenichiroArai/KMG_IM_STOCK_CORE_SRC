@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Supplier;
 
-import kmg.im.stock.core.domain.model.PowerIndexCalcModel;
+import kmg.im.stock.core.domain.model.ImStkPowerIndexCalcModel;
 
 /**
  * 投資株式勢力指数サービスインタフェース<br>
@@ -24,7 +24,7 @@ public interface ImStkPowerIndexService {
      * @param dataList
      *                 データリスト
      */
-    void initialize(final List<PowerIndexCalcModel> dataList);
+    void initialize(final List<ImStkPowerIndexCalcModel> dataList);
 
     /**
      * データリストを返す<br>
@@ -34,7 +34,7 @@ public interface ImStkPowerIndexService {
      * @version 1.0.0
      * @return データリスト
      */
-    List<PowerIndexCalcModel> getDataList();
+    List<ImStkPowerIndexCalcModel> getDataList();
 
     /**
      * 計算する<br>

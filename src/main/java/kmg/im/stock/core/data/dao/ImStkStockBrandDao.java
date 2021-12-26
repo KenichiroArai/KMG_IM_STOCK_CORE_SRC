@@ -7,8 +7,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import kmg.im.stock.core.data.dto.StockBrandDto;
-import kmg.im.stock.core.data.dto.impl.StockBrandDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkStockBrandDto;
+import kmg.im.stock.core.data.dto.impl.ImStkStockBrandDtoImpl;
 
 /**
  * 投資株式株銘柄ＤＡＯ<br>
@@ -57,12 +57,12 @@ public class ImStkStockBrandDao {
         long result = 0L;
 
         /* パラメータを設定する */
-        final StockBrandDto stockBrandDto = new StockBrandDtoImpl();
-        stockBrandDto.setCode(stockBrandCode);
-        stockBrandDto.setStartDate(baseDate);
+        final ImStkStockBrandDto imStkStockBrandDto = new ImStkStockBrandDtoImpl();
+        imStkStockBrandDto.setCode(stockBrandCode);
+        imStkStockBrandDto.setStartDate(baseDate);
 
         /* DBを実行する */
-        final SqlParameterSource params = new BeanPropertySqlParameterSource(stockBrandDto);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(imStkStockBrandDto);
         result = this.jdbc.queryForObject(ImStkStockBrandDao.GET_ID_SQL, params, Long.class);
 
         return result;

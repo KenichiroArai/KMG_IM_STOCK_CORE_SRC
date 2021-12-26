@@ -1,6 +1,6 @@
 package kmg.im.stock.core.domain.service;
 
-import kmg.im.stock.core.domain.model.StockPriceCalcValueMgtModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceCalcValueMgtModel;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 
 /**
@@ -18,10 +18,10 @@ public interface ImStkStockPriceCalcValueService {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceCalcValueMgtModel
-     *                                    株価計算値管理モデル
+     * @param imStkStockPriceCalcValueMgtModel
+     *                                         投資株式株価計算値管理モデル
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
-    void register(StockPriceCalcValueMgtModel stockPriceCalcValueMgtModel) throws ImStkDomainException;
+    void register(ImStkStockPriceCalcValueMgtModel imStkStockPriceCalcValueMgtModel) throws ImStkDomainException;
 }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgDecimal;
-import kmg.im.stock.core.domain.model.PowerIndexCalcModel;
+import kmg.im.stock.core.domain.model.ImStkPowerIndexCalcModel;
 import kmg.im.stock.core.domain.service.ImStkEmaService;
 import kmg.im.stock.core.domain.service.ImStkPowerIndexService;
 
@@ -38,7 +38,7 @@ public class ImStkPowerIndexServiceImpl implements ImStkPowerIndexService {
     private int smoothingPeriod;
 
     /** データリスト */
-    private final List<PowerIndexCalcModel> dataList;
+    private final List<ImStkPowerIndexCalcModel> dataList;
 
     /** 計算結果のリスト */
     private final List<Supplier<BigDecimal>> calcResultList;
@@ -74,7 +74,7 @@ public class ImStkPowerIndexServiceImpl implements ImStkPowerIndexService {
      */
     @Override
     @SuppressWarnings("hiding")
-    public void initialize(final List<PowerIndexCalcModel> dataList) {
+    public void initialize(final List<ImStkPowerIndexCalcModel> dataList) {
 
         this.dataList.clear();
 
@@ -92,8 +92,8 @@ public class ImStkPowerIndexServiceImpl implements ImStkPowerIndexService {
      * @return データリスト
      */
     @Override
-    public List<PowerIndexCalcModel> getDataList() {
-        final List<PowerIndexCalcModel> result = this.dataList;
+    public List<ImStkPowerIndexCalcModel> getDataList() {
+        final List<ImStkPowerIndexCalcModel> result = this.dataList;
         return result;
     }
 

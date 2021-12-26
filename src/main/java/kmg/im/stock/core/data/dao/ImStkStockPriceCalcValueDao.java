@@ -13,9 +13,9 @@ import kmg.core.domain.model.SqlPathModel;
 import kmg.core.domain.model.impl.SqlPathModelImpl;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.core.infrastructure.type.KmgString;
-import kmg.im.stock.core.data.dto.SpcvDeleteCondDto;
-import kmg.im.stock.core.data.dto.StockPriceCalcValueDto;
-import kmg.im.stock.core.data.dto.impl.SpcvDeleteCondDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkSpcvDeleteCondDto;
+import kmg.im.stock.core.data.dto.ImStkStockPriceCalcValueDto;
+import kmg.im.stock.core.data.dto.impl.ImStkSpcvDeleteCondDtoImpl;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
@@ -76,10 +76,10 @@ public class ImStkStockPriceCalcValueDao {
         long result = 0L;
 
         /* パラメータを設定する */
-        final SpcvDeleteCondDto spcvDeleteCondDto = new SpcvDeleteCondDtoImpl();
-        spcvDeleteCondDto.setStockBrandId(sbId);
-        spcvDeleteCondDto.setPeriodTypeId(periodTypeTypes.get());
-        final SqlParameterSource param = new BeanPropertySqlParameterSource(spcvDeleteCondDto);
+        final ImStkSpcvDeleteCondDto imStkSpcvDeleteCondDto = new ImStkSpcvDeleteCondDtoImpl();
+        imStkSpcvDeleteCondDto.setStockBrandId(sbId);
+        imStkSpcvDeleteCondDto.setPeriodTypeId(periodTypeTypes.get());
+        final SqlParameterSource param = new BeanPropertySqlParameterSource(imStkSpcvDeleteCondDto);
 
         /* SQLを作成する */
         final String sql = ImStkStockPriceCalcValueDao.DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH.toSql();
@@ -96,28 +96,28 @@ public class ImStkStockPriceCalcValueDao {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceCalcValueDto
-     *                               株価計算値ＤＴＯ
+     * @param imStkStockPriceCalcValueDto
+     *                                    投資株式株価計算値ＤＴＯ
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      * @return 挿入数
      */
-    public long insert(final StockPriceCalcValueDto stockPriceCalcValueDto) throws KmgDomainException {
+    public long insert(final ImStkStockPriceCalcValueDto imStkStockPriceCalcValueDto) throws KmgDomainException {
 
         long result = 0L;
 
         /* パラメータを設定する */
-        stockPriceCalcValueDto.setStartDate(LocalDate.MIN);
-        stockPriceCalcValueDto.setEndDate(LocalDate.MAX);
-        stockPriceCalcValueDto.setLocaleId("ja"); // TODO KenichiroArai 2021/05/01 列挙型
-        stockPriceCalcValueDto.setCreator("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/27 後で考える
-        stockPriceCalcValueDto.setCreatedDate(LocalDateTime.now());
-        stockPriceCalcValueDto.setUpdater("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/27 後で考える
-        stockPriceCalcValueDto.setUpdateDate(LocalDateTime.now());
-        stockPriceCalcValueDto.setNote(KmgString.EMPTY);
-        stockPriceCalcValueDto.setName(KmgString.EMPTY);
+        imStkStockPriceCalcValueDto.setStartDate(LocalDate.MIN);
+        imStkStockPriceCalcValueDto.setEndDate(LocalDate.MAX);
+        imStkStockPriceCalcValueDto.setLocaleId("ja"); // TODO KenichiroArai 2021/05/01 列挙型
+        imStkStockPriceCalcValueDto.setCreator("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/27 後で考える
+        imStkStockPriceCalcValueDto.setCreatedDate(LocalDateTime.now());
+        imStkStockPriceCalcValueDto.setUpdater("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/27 後で考える
+        imStkStockPriceCalcValueDto.setUpdateDate(LocalDateTime.now());
+        imStkStockPriceCalcValueDto.setNote(KmgString.EMPTY);
+        imStkStockPriceCalcValueDto.setName(KmgString.EMPTY);
 
-        final SqlParameterSource param = new BeanPropertySqlParameterSource(stockPriceCalcValueDto);
+        final SqlParameterSource param = new BeanPropertySqlParameterSource(imStkStockPriceCalcValueDto);
         result = this.jdbc.update(ImStkStockPriceCalcValueDao.INSERT_SQL_PATH.toSql(), param);
 
         return result;

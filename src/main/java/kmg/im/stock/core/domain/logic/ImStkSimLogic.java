@@ -1,7 +1,7 @@
 package kmg.im.stock.core.domain.logic;
 
-import kmg.im.stock.core.domain.model.StockBrandModel;
-import kmg.im.stock.core.domain.model.StockPriceTimeSeriesModel;
+import kmg.im.stock.core.domain.model.ImStkStockBrandModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceTimeSeriesModel;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 
 /**
@@ -14,18 +14,18 @@ import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 public interface ImStkSimLogic {
 
     /**
-     * 株価コードに該当する株価時系列管理モデルを返す<br>
+     * 株価コードに該当する投資株式株銘柄モデルを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
      * @param stockCode
      *                  株価コード
-     * @return 株価時系列管理
+     * @return 投資株式株銘柄モデル
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
-    StockBrandModel getStockPriceTimeSeriesMgtModel(long stockCode) throws ImStkDomainException;
+    ImStkStockBrandModel getImStkStockBrandModel(long stockCode) throws ImStkDomainException;
 
     /**
      * 第１のスクリーンに掛ける<br>
@@ -33,11 +33,11 @@ public interface ImStkSimLogic {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceTimeSeries
-     *                             株価時系列
+     * @param imStkStockPriceTimeSeriesModel
+     *                                       投資株式株価時系列モデル
      * @return true：スクリーンに引っかる、false：スクリーンに引っかからない
      */
-    boolean hangOnFirstScreen(StockPriceTimeSeriesModel stockPriceTimeSeries);
+    boolean hangOnFirstScreen(ImStkStockPriceTimeSeriesModel imStkStockPriceTimeSeriesModel);
 
     /**
      * 第２のスクリーンに掛ける<br>
@@ -45,11 +45,11 @@ public interface ImStkSimLogic {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceTimeSeries
-     *                             株価時系列
+     * @param imStkStockPriceTimeSeriesModel
+     *                                       投資株式株価時系列モデル
      * @return true：スクリーンに引っかる、false：スクリーンに引っかからない
      */
-    boolean hangOnSecondScreen(StockPriceTimeSeriesModel stockPriceTimeSeries);
+    boolean hangOnSecondScreen(ImStkStockPriceTimeSeriesModel imStkStockPriceTimeSeriesModel);
 
     /**
      * 第３のスクリーンに掛ける<br>
@@ -57,10 +57,10 @@ public interface ImStkSimLogic {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceTimeSeries
-     *                             株価時系列
+     * @param imStkStockPriceTimeSeriesModel
+     *                                       投資株式株価時系列モデル
      * @return true：スクリーンに引っかる、false：スクリーンに引っかからない
      */
-    boolean hangOnThirdScreen(StockPriceTimeSeriesModel stockPriceTimeSeries);
+    boolean hangOnThirdScreen(ImStkStockPriceTimeSeriesModel imStkStockPriceTimeSeriesModel);
 
 }

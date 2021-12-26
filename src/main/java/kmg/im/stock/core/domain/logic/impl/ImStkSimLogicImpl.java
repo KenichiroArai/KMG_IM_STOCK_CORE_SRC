@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.core.infrastructure.utils.ListUtils;
 import kmg.im.stock.core.data.dao.ImStkSimDao;
-import kmg.im.stock.core.data.dto.SimDto;
+import kmg.im.stock.core.data.dto.ImStkSimDto;
 import kmg.im.stock.core.domain.logic.ImStkSimLogic;
-import kmg.im.stock.core.domain.model.StockBrandModel;
-import kmg.im.stock.core.domain.model.StockPriceCalcValueModel;
-import kmg.im.stock.core.domain.model.StockPriceTimeSeriesModel;
-import kmg.im.stock.core.domain.model.impl.StockBrandModelImpl;
-import kmg.im.stock.core.domain.model.impl.StockPriceCalcValueModelImpl;
-import kmg.im.stock.core.domain.model.impl.StockPriceTimeSeriesModelImpl;
+import kmg.im.stock.core.domain.model.ImStkStockBrandModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceCalcValueModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceTimeSeriesModel;
+import kmg.im.stock.core.domain.model.impl.ImStkStockBrandModelImpl;
+import kmg.im.stock.core.domain.model.impl.ImStkStockPriceCalcValueModelImpl;
+import kmg.im.stock.core.domain.model.impl.ImStkStockPriceTimeSeriesModelImpl;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
 import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
@@ -48,25 +48,25 @@ public class ImStkSimLogicImpl implements ImStkSimLogic {
     }
 
     /**
-     * 株価コードに該当する株価時系列管理モデルを返す<br>
+     * 株価コードに該当する投資株式株銘柄モデルを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
      * @param stockCode
      *                  株価コード
-     * @return 株価時系列管理モデル
+     * @return 投資株式株銘柄モデル
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public StockBrandModel getStockPriceTimeSeriesMgtModel(final long stockCode) throws ImStkDomainException {
-        final StockBrandModel result = new StockBrandModelImpl();
+    public ImStkStockBrandModel getImStkStockBrandModel(final long stockCode) throws ImStkDomainException {
+        final ImStkStockBrandModel result = new ImStkStockBrandModelImpl();
 
         /* シミュレーションを行うデータを取得する */
-        List<SimDto> simDtoList = null;
+        List<ImStkSimDto> imStkSimDtoList = null;
         try {
-            simDtoList = this.imStkSimDao.find(stockCode);
+            imStkSimDtoList = this.imStkSimDao.find(stockCode);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
             final String errMsg = "";
@@ -76,62 +76,62 @@ public class ImStkSimLogicImpl implements ImStkSimLogic {
         }
 
         /* 株価銘柄を設定する */
-        if (ListUtils.isNotEmpty(simDtoList)) {
-            final SimDto simDto = simDtoList.get(0);
+        if (ListUtils.isNotEmpty(imStkSimDtoList)) {
+            final ImStkSimDto imStkSimDto = imStkSimDtoList.get(0);
 
-            result.setStockBrandId(simDto.getStockBrandId()); // 株銘柄ID
-            result.setStockBrandCode(simDto.getStockBrandCode()); // 株価銘柄コード
+            result.setStockBrandId(imStkSimDto.getStockBrandId()); // 株銘柄ID
+            result.setStockBrandCode(imStkSimDto.getStockBrandCode()); // 株価銘柄コード
         }
 
         /* 株価時系列情報を設定する */
-        final SortedMap<Long, StockPriceTimeSeriesModel> sptsMap = new TreeMap<>(); // 株価時系列モデルのマップ
-        for (final SimDto simDto : simDtoList) {
+        final SortedMap<Long, ImStkStockPriceTimeSeriesModel> sptsMap = new TreeMap<>(); // 株価時系列モデルのマップ
+        for (final ImStkSimDto imStkSimDto : imStkSimDtoList) {
 
             // 株価時系列モデルの取得
-            StockPriceTimeSeriesModel sptsModel = sptsMap.get(simDto.getNo());
+            ImStkStockPriceTimeSeriesModel sptsModel = sptsMap.get(imStkSimDto.getNo());
             if (sptsModel == null) {
                 // 空の場合
 
                 // 株価時系列情報を設定する
-                sptsModel = new StockPriceTimeSeriesModelImpl();
-                sptsModel.setId(simDto.getSptsId()); // 株価時系列ID
-                sptsModel.setName(simDto.getSptsName()); // 株価時系列名称
-                sptsModel.setNo(simDto.getNo()); // 番号
-                sptsModel.setPeriodStartDate(simDto.getPeriodStartDate()); // 期間開始日
-                sptsModel.setPeriodEndDate(simDto.getPeriodEndDate()); // 期間終了日
-                sptsModel.setOp(simDto.getOp()); // 始値
-                sptsModel.setHp(simDto.getHp()); // 高値
-                sptsModel.setLp(simDto.getLp()); // 安値
-                sptsModel.setCp(simDto.getCp()); // 終値
-                sptsModel.setVolume(simDto.getVolume()); // 出来高
+                sptsModel = new ImStkStockPriceTimeSeriesModelImpl();
+                sptsModel.setId(imStkSimDto.getSptsId()); // 株価時系列ID
+                sptsModel.setName(imStkSimDto.getSptsName()); // 株価時系列名称
+                sptsModel.setNo(imStkSimDto.getNo()); // 番号
+                sptsModel.setPeriodStartDate(imStkSimDto.getPeriodStartDate()); // 期間開始日
+                sptsModel.setPeriodEndDate(imStkSimDto.getPeriodEndDate()); // 期間終了日
+                sptsModel.setOp(imStkSimDto.getOp()); // 始値
+                sptsModel.setHp(imStkSimDto.getHp()); // 高値
+                sptsModel.setLp(imStkSimDto.getLp()); // 安値
+                sptsModel.setCp(imStkSimDto.getCp()); // 終値
+                sptsModel.setVolume(imStkSimDto.getVolume()); // 出来高
 
                 // 株価時系列モデルのマップに追加する
-                sptsMap.put(simDto.getNo(), sptsModel);
+                sptsMap.put(imStkSimDto.getNo(), sptsModel);
 
-                // 株価時系列管理モデルに追加する
+                // 投資株式株銘柄モデルに追加する
                 // TODO KenichiroArai 2021/09/07 株銘柄へのモデル変更対応の一時的エラー回避株銘柄
-//                final PeriodTypeTypes periodTypeTypes = PeriodTypeTypes.getEnum(simDto.getPeriodTypeId());
+//                final PeriodTypeTypes periodTypeTypes = PeriodTypeTypes.getEnum(imStkSimDto.getPeriodTypeId());
 //                result.addData(periodTypeTypes, sptsModel);
             }
 
             // 株価計算値を設定する
             // 投資株式株価計算値の種類の種類を取得する
             final ImStkStockPriceCalcValueTypeTypes imStkStockPriceCalcValueTypeTypes = ImStkStockPriceCalcValueTypeTypes
-                .getEnum(simDto.getSpcvtId());
+                .getEnum(imStkSimDto.getSpcvtId());
             // 株価計算値モデルを取得する
-            StockPriceCalcValueModel spcvModel = sptsModel
-                .getStockPriceCalcValueModel(imStkStockPriceCalcValueTypeTypes);
+            ImStkStockPriceCalcValueModel spcvModel = sptsModel
+                .getImStkStockPriceCalcValueModel(imStkStockPriceCalcValueTypeTypes);
             if (spcvModel == null) {
                 // データがない場合
 
                 // 新規に作成
-                spcvModel = new StockPriceCalcValueModelImpl();
+                spcvModel = new ImStkStockPriceCalcValueModelImpl();
                 sptsModel.addSpcvModel(imStkStockPriceCalcValueTypeTypes, spcvModel);
             }
             // 株価計算値モデルを設定する
             spcvModel.setSpcvtId(imStkStockPriceCalcValueTypeTypes); // 株価計算値の種類ID
-            spcvModel.setName(simDto.getSpcvtName()); // 株価計算値の種類名称
-            spcvModel.setCalcValue(simDto.getCalcValue()); // 計算値
+            spcvModel.setName(imStkSimDto.getSpcvtName()); // 株価計算値の種類名称
+            spcvModel.setCalcValue(imStkSimDto.getCalcValue()); // 計算値
         }
 
         return result;
@@ -143,12 +143,12 @@ public class ImStkSimLogicImpl implements ImStkSimLogic {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceTimeSeries
-     *                             株価時系列
+     * @param imStkStockPriceTimeSeriesModel
+     *                                       株価時系列
      * @return true：スクリーンに引っかる、false：スクリーンに引っかからない
      */
     @Override
-    public boolean hangOnFirstScreen(final StockPriceTimeSeriesModel stockPriceTimeSeries) {
+    public boolean hangOnFirstScreen(final ImStkStockPriceTimeSeriesModel imStkStockPriceTimeSeriesModel) {
         // TODO KenichiroArai 2021/08/24 未実装
         return false;
     }
@@ -159,12 +159,12 @@ public class ImStkSimLogicImpl implements ImStkSimLogic {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceTimeSeries
-     *                             株価時系列
+     * @param imStkStockPriceTimeSeriesModel
+     *                                       投資株式株価時系列モデル
      * @return true：スクリーンに引っかる、false：スクリーンに引っかからない
      */
     @Override
-    public boolean hangOnSecondScreen(final StockPriceTimeSeriesModel stockPriceTimeSeries) {
+    public boolean hangOnSecondScreen(final ImStkStockPriceTimeSeriesModel imStkStockPriceTimeSeriesModel) {
         // TODO KenichiroArai 2021/08/24 未実装
         return false;
     }
@@ -175,12 +175,12 @@ public class ImStkSimLogicImpl implements ImStkSimLogic {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceTimeSeries
-     *                             株価時系列
+     * @param imStkStockPriceTimeSeriesModel
+     *                                       投資株式株価時系列モデル
      * @return true：スクリーンに引っかる、false：スクリーンに引っかからない
      */
     @Override
-    public boolean hangOnThirdScreen(final StockPriceTimeSeriesModel stockPriceTimeSeries) {
+    public boolean hangOnThirdScreen(final ImStkStockPriceTimeSeriesModel imStkStockPriceTimeSeriesModel) {
         // TODO KenichiroArai 2021/08/24 未実装
         return false;
     }

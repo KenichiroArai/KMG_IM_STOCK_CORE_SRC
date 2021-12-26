@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 
 import kmg.core.infrastructure.utils.ListUtils;
+import kmg.im.stock.core.domain.model.ImStkPowerIndexCalcModel;
+import kmg.im.stock.core.domain.model.ImStkSimpleSptsMgtModel;
+import kmg.im.stock.core.domain.model.ImStkSimpleSptsModel;
 import kmg.im.stock.core.domain.model.ImStkSpcvInitMgtModel;
 import kmg.im.stock.core.domain.model.ImStkSpcvInitModel;
-import kmg.im.stock.core.domain.model.PowerIndexCalcModel;
-import kmg.im.stock.core.domain.model.SimpleSptsMgtModel;
-import kmg.im.stock.core.domain.model.SimpleSptsModel;
 
 /**
  * 投資株式株価計算値初期化管理モデルインタフェース<br>
@@ -39,17 +39,17 @@ public class ImStkSpcvInitMgtModelImpl implements ImStkSpcvInitMgtModel {
     }
 
     /**
-     * シンプル株価時系列管理モデルを取り込む<br>
+     * 投資株式投資株式シンプル株価時系列モデルを取り込む<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param simpleSptsMgtDailyModel
-     *                                シンプル株価時系列管理モデル
+     * @param imStkSimpleSptsMgtModel
+     *                                投資株式投資株式シンプル株価時系列モデル
      */
     @Override
-    public void from(final SimpleSptsMgtModel simpleSptsMgtDailyModel) {
-        for (final SimpleSptsModel simpleSptsModel : simpleSptsMgtDailyModel.getDataList()) {
+    public void from(final ImStkSimpleSptsMgtModel imStkSimpleSptsMgtModel) {
+        for (final ImStkSimpleSptsModel simpleSptsModel : imStkSimpleSptsMgtModel.getDataList()) {
             final ImStkSpcvInitModel tsstsSpcvInitModel = new ImStkSpcvInitModelImpl();
             BeanUtils.copyProperties(simpleSptsModel, tsstsSpcvInitModel);
             this.dataList.add(tsstsSpcvInitModel);
@@ -164,16 +164,16 @@ public class ImStkSpcvInitMgtModelImpl implements ImStkSpcvInitMgtModel {
     }
 
     /**
-     * 勢力指数計算モデルリストとして返す<br>
+     * 投資株式勢力指数計算モデルのリストとして返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return 勢力指数計算モデルリスト
+     * @return 投資株式勢力指数計算モデルのリスト
      */
     @Override
-    public List<PowerIndexCalcModel> toPowerIndexCalcModelList() {
-        final List<PowerIndexCalcModel> result = this.dataList.stream().collect(Collectors.toList());
+    public List<ImStkPowerIndexCalcModel> toImStkPowerIndexCalcModelList() {
+        final List<ImStkPowerIndexCalcModel> result = this.dataList.stream().collect(Collectors.toList());
         return result;
     }
 

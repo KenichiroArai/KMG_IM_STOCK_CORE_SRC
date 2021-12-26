@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * @sine 1.0.0
  * @version 1.0.0
  */
-public interface ImStkSpcvInitModel extends Supplier<BigDecimal>, PowerIndexCalcModel {
+public interface ImStkSpcvInitModel extends Supplier<BigDecimal>, ImStkPowerIndexCalcModel {
 
     /**
      * 識別番号を設定する<br>

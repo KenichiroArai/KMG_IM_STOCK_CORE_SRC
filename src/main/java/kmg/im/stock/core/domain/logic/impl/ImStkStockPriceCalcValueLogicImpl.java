@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.im.stock.core.data.dao.ImStkStockPriceCalcValueDao;
-import kmg.im.stock.core.data.dto.StockPriceCalcValueDto;
-import kmg.im.stock.core.data.dto.impl.StockPriceCalcValueDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkStockPriceCalcValueDto;
+import kmg.im.stock.core.data.dto.impl.ImStkStockPriceCalcValueDtoImpl;
 import kmg.im.stock.core.domain.logic.ImStkStockPriceCalcValueLogic;
-import kmg.im.stock.core.domain.model.StockPriceCalcValueMgtModel;
-import kmg.im.stock.core.domain.model.StockPriceCalcValueModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceCalcValueMgtModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceCalcValueModel;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
@@ -76,22 +76,24 @@ public class ImStkStockPriceCalcValueLogicImpl implements ImStkStockPriceCalcVal
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param stockPriceCalcValueMgtModel
-     *                                    株価計算値管理モデル
+     * @param imStkStockPriceCalcValueMgtModel
+     *                                         投資株式株価計算値管理モデル
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public void register(final StockPriceCalcValueMgtModel stockPriceCalcValueMgtModel) throws ImStkDomainException {
+    public void register(final ImStkStockPriceCalcValueMgtModel imStkStockPriceCalcValueMgtModel)
+        throws ImStkDomainException {
         try {
 
-            for (final StockPriceCalcValueModel stockPriceCalcValueModel : stockPriceCalcValueMgtModel.getDataList()) {
+            for (final ImStkStockPriceCalcValueModel imStkStockPriceCalcValueModel : imStkStockPriceCalcValueMgtModel
+                .getDataList()) {
 
-                final StockPriceCalcValueDto stockPriceCalcValueDto = new StockPriceCalcValueDtoImpl();
-                BeanUtils.copyProperties(stockPriceCalcValueModel, stockPriceCalcValueDto);
-                stockPriceCalcValueDto.setSpcvtId(stockPriceCalcValueModel.getSpcvtId().get());
+                final ImStkStockPriceCalcValueDto imStkStockPriceCalcValueDto = new ImStkStockPriceCalcValueDtoImpl();
+                BeanUtils.copyProperties(imStkStockPriceCalcValueModel, imStkStockPriceCalcValueDto);
+                imStkStockPriceCalcValueDto.setSpcvtId(imStkStockPriceCalcValueModel.getSpcvtId().get());
 
-                this.imStkStockPriceCalcValueDao.insert(stockPriceCalcValueDto);
+                this.imStkStockPriceCalcValueDao.insert(imStkStockPriceCalcValueDto);
             }
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/27 例外処理

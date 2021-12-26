@@ -13,12 +13,12 @@ import kmg.core.domain.model.SqlPathModel;
 import kmg.core.domain.model.impl.SqlPathModelImpl;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.core.infrastructure.type.KmgString;
-import kmg.im.stock.core.data.dto.SptsptDeleteCondDto;
-import kmg.im.stock.core.data.dto.SptsptDto;
-import kmg.im.stock.core.data.dto.SptsptRegDto;
-import kmg.im.stock.core.data.dto.impl.SptsptDeleteCondDtoImpl;
-import kmg.im.stock.core.data.dto.impl.SptsptDtoImpl;
-import kmg.im.stock.core.data.dto.impl.SptsptRegDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkSptsptDeleteCondDto;
+import kmg.im.stock.core.data.dto.ImStkSptsptDto;
+import kmg.im.stock.core.data.dto.ImStkSptsptRegDto;
+import kmg.im.stock.core.data.dto.impl.ImStkSptsptDeleteCondDtoImpl;
+import kmg.im.stock.core.data.dto.impl.ImStkSptsptDtoImpl;
+import kmg.im.stock.core.data.dto.impl.ImStkSptsptRegDtoImpl;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
@@ -83,10 +83,10 @@ public class ImStkSptsptDao {
         long result = 0L;
 
         /* パラメータを設定する */
-        final SptsptDeleteCondDto sptsptDeleteCondDto = new SptsptDeleteCondDtoImpl();
-        sptsptDeleteCondDto.setStockBrandId(sbId);
-        sptsptDeleteCondDto.setPeriodTypeId(periodTypeTypes.get());
-        final SqlParameterSource param = new BeanPropertySqlParameterSource(sptsptDeleteCondDto);
+        final ImStkSptsptDeleteCondDto imStkSptsptDeleteCondDto = new ImStkSptsptDeleteCondDtoImpl();
+        imStkSptsptDeleteCondDto.setStockBrandId(sbId);
+        imStkSptsptDeleteCondDto.setPeriodTypeId(periodTypeTypes.get());
+        final SqlParameterSource param = new BeanPropertySqlParameterSource(imStkSptsptDeleteCondDto);
 
         /* 削除する */
         result = this.jdbc.update(ImStkSptsptDao.DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH.toSql(), param);
@@ -116,13 +116,13 @@ public class ImStkSptsptDao {
         long result = 0L;
 
         /* パラメータを設定する */
-        final SptsptDto sptsptDto = new SptsptDtoImpl();
-        sptsptDto.setStockBrandId(stockBrandId);
-        sptsptDto.setPeriodTypeId(periodTypeTypes.get());
-        sptsptDto.setStartDate(baseDate);
+        final ImStkSptsptDto imStkSptsptDto = new ImStkSptsptDtoImpl();
+        imStkSptsptDto.setStockBrandId(stockBrandId);
+        imStkSptsptDto.setPeriodTypeId(periodTypeTypes.get());
+        imStkSptsptDto.setStartDate(baseDate);
 
         /* DBを実行する */
-        final SqlParameterSource params = new BeanPropertySqlParameterSource(sptsptDto);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(imStkSptsptDto);
         result = this.jdbc.queryForObject(ImStkSptsptDao.GET_ID_SQL_PATH.toSql(), params, Long.class);
 
         return result;
@@ -148,20 +148,20 @@ public class ImStkSptsptDao {
         long result = 0L;
 
         /* パラメータを設定する */
-        final SptsptRegDto sptsptRegDto = new SptsptRegDtoImpl();
-        sptsptRegDto.setStartDate(LocalDate.MIN);
-        sptsptRegDto.setEndDate(LocalDate.MAX);
-        sptsptRegDto.setLocaleId("ja"); // TODO KenichiroArai 2021/06/05 列挙型
-        sptsptRegDto.setCreator("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/05 後で考える
-        sptsptRegDto.setCreatedDate(LocalDateTime.now());
-        sptsptRegDto.setUpdater("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/05 後で考える
-        sptsptRegDto.setUpdateDate(LocalDateTime.now());
-        sptsptRegDto.setNote(KmgString.EMPTY);
-        sptsptRegDto.setStockBrandId(sbId);
-        sptsptRegDto.setPeriodTypeId(ptt.get());
+        final ImStkSptsptRegDto imStkSptsptRegDto = new ImStkSptsptRegDtoImpl();
+        imStkSptsptRegDto.setStartDate(LocalDate.MIN);
+        imStkSptsptRegDto.setEndDate(LocalDate.MAX);
+        imStkSptsptRegDto.setLocaleId("ja"); // TODO KenichiroArai 2021/06/05 列挙型
+        imStkSptsptRegDto.setCreator("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/05 後で考える
+        imStkSptsptRegDto.setCreatedDate(LocalDateTime.now());
+        imStkSptsptRegDto.setUpdater("TSSTS_MAIN_USER"); // TODO KenichiroArai 2021/06/05 後で考える
+        imStkSptsptRegDto.setUpdateDate(LocalDateTime.now());
+        imStkSptsptRegDto.setNote(KmgString.EMPTY);
+        imStkSptsptRegDto.setStockBrandId(sbId);
+        imStkSptsptRegDto.setPeriodTypeId(ptt.get());
 
         /* DBを実行する */
-        final SqlParameterSource params = new BeanPropertySqlParameterSource(sptsptRegDto);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(imStkSptsptRegDto);
         result = this.jdbc.update(ImStkSptsptDao.INSERT_BY_SB_ID_AND_PTT_SQL_PATH.toSql(), params);
 
         return result;

@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.core.infrastructure.utils.ListUtils;
 import kmg.im.stock.core.data.dao.ImStkStockPriceTimeSeriesDao;
-import kmg.im.stock.core.data.dto.StockPriceTimeSeriesDto;
-import kmg.im.stock.core.data.dto.impl.StockPriceTimeSeriesDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkStockPriceTimeSeriesDto;
+import kmg.im.stock.core.data.dto.impl.ImStkStockPriceTimeSeriesDtoImpl;
 import kmg.im.stock.core.domain.logic.ImStkStockPriceTimeSeriesLogic;
-import kmg.im.stock.core.domain.model.SimpleSptsMgtModel;
-import kmg.im.stock.core.domain.model.SimpleSptsModel;
-import kmg.im.stock.core.domain.model.SptsRegDataModel;
-import kmg.im.stock.core.domain.model.impl.SimpleSptsMgtModelImpl;
-import kmg.im.stock.core.domain.model.impl.SimpleSptsModelImpl;
+import kmg.im.stock.core.domain.model.ImStkSimpleSptsMgtModel;
+import kmg.im.stock.core.domain.model.ImStkSimpleSptsModel;
+import kmg.im.stock.core.domain.model.ImStkSptsRegDataModel;
+import kmg.im.stock.core.domain.model.impl.ImStkSimpleSptsMgtModelImpl;
+import kmg.im.stock.core.domain.model.impl.ImStkSimpleSptsModelImpl;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
@@ -54,19 +54,19 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
      * @sine 1.0.0
      * @version 1.0.0
      * @param sbId
-     *                        株価銘柄ＩＤ
-     * @param periodTypeTypes
-     *                        投資株式期間の種類の種類
+     *                             株価銘柄ＩＤ
+     * @param imStkPeriodTypeTypes
+     *                             投資株式期間の種類の種類
      * @return 削除数
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public long deleteBySbIdAndImStkPeriodTypeTypes(final long sbId, final ImStkPeriodTypeTypes periodTypeTypes)
+    public long deleteBySbIdAndImStkPeriodTypeTypes(final long sbId, final ImStkPeriodTypeTypes imStkPeriodTypeTypes)
         throws ImStkDomainException {
         long result = 0;
         try {
-            result = this.stockPriceTimeSeriesDao.deleteBySbIdAndImStkPeriodTypeTypes(sbId, periodTypeTypes);
+            result = this.stockPriceTimeSeriesDao.deleteBySbIdAndImStkPeriodTypeTypes(sbId, imStkPeriodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
             final String errMsg = "";
@@ -83,29 +83,29 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param periodTypeTypes
-     *                              投資株式期間の種類の種類
-     * @param sptsMainDataModelList
-     *                              株価時系列登録データモデルのリスト
+     * @param imStkPeriodTypeTypes
+     *                                  投資株式期間の種類の種類
+     * @param imStkSptsRegDataModelList
+     *                                  株価時系列登録データモデルのリスト
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public void register(final ImStkPeriodTypeTypes periodTypeTypes, final List<SptsRegDataModel> sptsMainDataModelList)
-        throws ImStkDomainException {
+    public void register(final ImStkPeriodTypeTypes imStkPeriodTypeTypes,
+        final List<ImStkSptsRegDataModel> imStkSptsRegDataModelList) throws ImStkDomainException {
 
-        if (ListUtils.isEmpty(sptsMainDataModelList)) {
+        if (ListUtils.isEmpty(imStkSptsRegDataModelList)) {
             return;
         }
 
-        for (final SptsRegDataModel sptsMainDataModel : sptsMainDataModelList) {
+        for (final ImStkSptsRegDataModel imStkSptsRegDataModel : imStkSptsRegDataModelList) {
 
             // TODO KenichiroArai 2021/05/20 BeanUtils.copyPropertiesをユーティリティ化する
-            final StockPriceTimeSeriesDto stockPriceTimeSeriesDto = new StockPriceTimeSeriesDtoImpl();
-            BeanUtils.copyProperties(sptsMainDataModel, stockPriceTimeSeriesDto);
+            final ImStkStockPriceTimeSeriesDto imStkStockPriceTimeSeriesDto = new ImStkStockPriceTimeSeriesDtoImpl();
+            BeanUtils.copyProperties(imStkSptsRegDataModel, imStkStockPriceTimeSeriesDto);
 
             try {
-                this.stockPriceTimeSeriesDao.insertByPttAndSptsDto(periodTypeTypes, stockPriceTimeSeriesDto);
+                this.stockPriceTimeSeriesDao.insertByPttAndSptsDto(imStkPeriodTypeTypes, imStkStockPriceTimeSeriesDto);
             } catch (final KmgDomainException e) {
                 // TODO KenichiroArai 2021/06/12 例外処理
                 final String errMsg = "";
@@ -123,22 +123,23 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
      * @sine 1.0.0
      * @version 1.0.0
      * @param sbId
-     *                        株銘柄ＩＤ
-     * @param periodTypeTypes
-     *                        投資株式期間の種類の種類
-     * @return シンプル株価時系列管理モデル
+     *                             株銘柄ＩＤ
+     * @param imStkPeriodTypeTypes
+     *                             投資株式期間の種類の種類
+     * @return 投資株式シンプル株価時系列管理モデル
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
     @Override
-    public SimpleSptsMgtModel findSimpleBySbIdAndPti(final long sbId, final ImStkPeriodTypeTypes periodTypeTypes)
-        throws ImStkDomainException {
-        final SimpleSptsMgtModel result = new SimpleSptsMgtModelImpl();
+    public ImStkSimpleSptsMgtModel findSimpleBySbIdAndPti(final long sbId,
+        final ImStkPeriodTypeTypes imStkPeriodTypeTypes) throws ImStkDomainException {
+        final ImStkSimpleSptsMgtModel result = new ImStkSimpleSptsMgtModelImpl();
 
         /* 株銘柄ＩＤと投資株式期間の種類の種類を基に株価時系列ＤＴＯのリストを取得する */
-        List<StockPriceTimeSeriesDto> stockPriceTimeSeriesDtoList = null;
+        List<ImStkStockPriceTimeSeriesDto> imStkStockPriceTimeSeriesDtoList = null;
         try {
-            stockPriceTimeSeriesDtoList = this.stockPriceTimeSeriesDao.findBySbIdAndPtt(sbId, periodTypeTypes);
+            imStkStockPriceTimeSeriesDtoList = this.stockPriceTimeSeriesDao.findBySbIdAndPtt(sbId,
+                imStkPeriodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/11/24 例外処理
             final String errMsg = "";
@@ -148,8 +149,8 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
         }
 
         /* シンプル株価時系列モデルのリストに詰め替える */
-        final List<SimpleSptsModel> simpleSptsModelList = stockPriceTimeSeriesDtoList.stream().map(mapper -> {
-            final SimpleSptsModel simpleSptsModel = new SimpleSptsModelImpl();
+        final List<ImStkSimpleSptsModel> simpleSptsModelList = imStkStockPriceTimeSeriesDtoList.stream().map(mapper -> {
+            final ImStkSimpleSptsModel simpleSptsModel = new ImStkSimpleSptsModelImpl();
             BeanUtils.copyProperties(mapper, simpleSptsModel);
             return simpleSptsModel;
         }).collect(Collectors.toList());

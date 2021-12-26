@@ -16,14 +16,14 @@ import kmg.core.domain.model.SqlPathModel;
 import kmg.core.domain.model.impl.SqlPathModelImpl;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.core.infrastructure.type.KmgString;
-import kmg.im.stock.core.data.dto.SimpleSptsSearchConditionDto;
-import kmg.im.stock.core.data.dto.SptsDeleteCondDto;
-import kmg.im.stock.core.data.dto.SptsptDto;
-import kmg.im.stock.core.data.dto.StockPriceTimeSeriesDto;
-import kmg.im.stock.core.data.dto.impl.SimpleSptsSearchConditionDtoImpl;
-import kmg.im.stock.core.data.dto.impl.SptsDeleteCondDtoImpl;
-import kmg.im.stock.core.data.dto.impl.SptsptDtoImpl;
-import kmg.im.stock.core.data.dto.impl.StockPriceTimeSeriesDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkSimpleSptsSearchConditionDto;
+import kmg.im.stock.core.data.dto.ImStkSptsDeleteCondDto;
+import kmg.im.stock.core.data.dto.ImStkSptsptDto;
+import kmg.im.stock.core.data.dto.ImStkStockPriceTimeSeriesDto;
+import kmg.im.stock.core.data.dto.impl.ImStkSimpleSptsSearchConditionDtoImpl;
+import kmg.im.stock.core.data.dto.impl.ImStkSptsDeleteCondDtoImpl;
+import kmg.im.stock.core.data.dto.impl.ImStkSptsptDtoImpl;
+import kmg.im.stock.core.data.dto.impl.ImStkStockPriceTimeSeriesDtoImpl;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
 /**
@@ -48,11 +48,11 @@ public class ImStkStockPriceTimeSeriesDao {
     private static final SqlPathModel DELETE_SQL_PATH = new SqlPathModelImpl(ImStkStockPriceTimeSeriesDao.MYSELF_CLASS,
         Paths.get("delete.sql"));
 
-    /** 投資株式期間の種類の種類と株価時系列ＤＴＯを基に挿入するＳＱＬパス */
+    /** 投資株式期間の種類の種類と投資株式株価時系列ＤＴＯを基に挿入するＳＱＬパス */
     private static final SqlPathModel INSERT_BY_PTT_AND_SPTS_DTO_SQL_PATH = new SqlPathModelImpl(
         ImStkStockPriceTimeSeriesDao.MYSELF_CLASS, Paths.get("insertByPttAndSptsDto.sql"));
 
-    /** 株銘柄ＩＤと投資株式期間の種類の種類を基に株価時系列ＤＴＯのリストを返す検索するＳＱＬパス */
+    /** 株銘柄ＩＤと投資株式期間の種類の種類を基に投資株式株価時系列ＤＴＯのリストを返す検索するＳＱＬパス */
     private static final SqlPathModel FIND_BY_SB_ID_AND_PTT_SQL_PATH = new SqlPathModelImpl(
         ImStkStockPriceTimeSeriesDao.MYSELF_CLASS, Paths.get("findBySbIdAndPtt.sql"));
 
@@ -92,10 +92,10 @@ public class ImStkStockPriceTimeSeriesDao {
         long result = 0L;
 
         /* パラメータを設定する */
-        final SptsDeleteCondDto sptsDeleteCondDto = new SptsDeleteCondDtoImpl();
-        sptsDeleteCondDto.setStockBrandId(sbId);
-        sptsDeleteCondDto.setPeriodTypeId(periodTypeTypes.get());
-        final SqlParameterSource param = new BeanPropertySqlParameterSource(sptsDeleteCondDto);
+        final ImStkSptsDeleteCondDto imStkSptsDeleteCondDto = new ImStkSptsDeleteCondDtoImpl();
+        imStkSptsDeleteCondDto.setStockBrandId(sbId);
+        imStkSptsDeleteCondDto.setPeriodTypeId(periodTypeTypes.get());
+        final SqlParameterSource param = new BeanPropertySqlParameterSource(imStkSptsDeleteCondDto);
 
         /* 削除する */
         result = this.jdbc.update(ImStkStockPriceTimeSeriesDao.DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH.toSql(),
@@ -123,17 +123,17 @@ public class ImStkStockPriceTimeSeriesDao {
 
         long result = 0L;
 
-        final SptsptDto sptsptDto = new SptsptDtoImpl();
-        sptsptDto.setPeriodTypeId(periodTypeTypes.get());
+        final ImStkSptsptDto imStkSptsptDto = new ImStkSptsptDtoImpl();
+        imStkSptsptDto.setPeriodTypeId(periodTypeTypes.get());
 
-        final SqlParameterSource param = new BeanPropertySqlParameterSource(sptsptDto);
+        final SqlParameterSource param = new BeanPropertySqlParameterSource(imStkSptsptDto);
         result = this.jdbc.update(ImStkStockPriceTimeSeriesDao.DELETE_SQL_PATH.toSql(), param);
 
         return result;
     }
 
     /**
-     * 投資株式期間の種類の種類と株価時系列ＤＴＯを基に挿入する<br>
+     * 投資株式期間の種類の種類と投資株式株価時系列ＤＴＯを基に挿入する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -141,12 +141,12 @@ public class ImStkStockPriceTimeSeriesDao {
      * @param ptt
      *                投資株式期間の種類の種類
      * @param sptsDto
-     *                株価時系列ＤＴＯ
+     *                投資株式株価時系列ＤＴＯ
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      * @return 挿入数
      */
-    public long insertByPttAndSptsDto(final ImStkPeriodTypeTypes ptt, final StockPriceTimeSeriesDto sptsDto)
+    public long insertByPttAndSptsDto(final ImStkPeriodTypeTypes ptt, final ImStkStockPriceTimeSeriesDto sptsDto)
         throws KmgDomainException {
 
         long result = 0L;
@@ -170,7 +170,7 @@ public class ImStkStockPriceTimeSeriesDao {
     }
 
     /**
-     * 株銘柄ＩＤと投資株式期間の種類の種類を基に株価時系列ＤＴＯのリストを返す検索する<br>
+     * 株銘柄ＩＤと投資株式期間の種類の種類を基に投資株式株価時系列ＤＴＯのリストを返す検索する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -179,27 +179,27 @@ public class ImStkStockPriceTimeSeriesDao {
      *             株銘柄ＩＤ
      * @param ptt
      *             投資株式期間の種類の種類
-     * @return 株価時系列ＤＴＯのリスト
+     * @return 投資株式株価時系列ＤＴＯのリスト
      * @throws KmgDomainException
      *                            ＫＭＧドメイン例外
      */
-    public List<StockPriceTimeSeriesDto> findBySbIdAndPtt(final long sbId, final ImStkPeriodTypeTypes ptt)
+    public List<ImStkStockPriceTimeSeriesDto> findBySbIdAndPtt(final long sbId, final ImStkPeriodTypeTypes ptt)
         throws KmgDomainException {
 
-        List<StockPriceTimeSeriesDto> result = null;
+        List<ImStkStockPriceTimeSeriesDto> result = null;
 
         /* パラメータを設定する */
-        final SimpleSptsSearchConditionDto simpleSptsSearchConditionDto = new SimpleSptsSearchConditionDtoImpl();
-        simpleSptsSearchConditionDto.setStockBrandId(sbId);
-        simpleSptsSearchConditionDto.setPeriodTypeId(ptt.get());
+        final ImStkSimpleSptsSearchConditionDto imStkSimpleSptsSearchConditionDto = new ImStkSimpleSptsSearchConditionDtoImpl();
+        imStkSimpleSptsSearchConditionDto.setStockBrandId(sbId);
+        imStkSimpleSptsSearchConditionDto.setPeriodTypeId(ptt.get());
 
         /* DBを実行する */
-        final SqlParameterSource params = new BeanPropertySqlParameterSource(simpleSptsSearchConditionDto);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(imStkSimpleSptsSearchConditionDto);
 
-        final List<StockPriceTimeSeriesDtoImpl> stockPriceTimeSeriesDtoImplList = this.jdbc.query(
+        final List<ImStkStockPriceTimeSeriesDtoImpl> imStkStockPriceTimeSeriesDtoImplList = this.jdbc.query(
             ImStkStockPriceTimeSeriesDao.FIND_BY_SB_ID_AND_PTT_SQL_PATH.toSql(), params,
-            BeanPropertyRowMapper.newInstance(StockPriceTimeSeriesDtoImpl.class));
-        result = stockPriceTimeSeriesDtoImplList.stream().collect(Collectors.toList());
+            BeanPropertyRowMapper.newInstance(ImStkStockPriceTimeSeriesDtoImpl.class));
+        result = imStkStockPriceTimeSeriesDtoImplList.stream().collect(Collectors.toList());
 
         return result;
 

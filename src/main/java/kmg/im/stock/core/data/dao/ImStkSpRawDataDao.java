@@ -15,10 +15,10 @@ import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.types.CharsetTypes;
 import kmg.core.infrastructure.types.DelimiterTypes;
 import kmg.core.infrastructure.utils.LocalDateUtils;
-import kmg.im.stock.core.data.dto.SpRawDataAcqDto;
-import kmg.im.stock.core.data.dto.SpRawDataAcqMgtDto;
-import kmg.im.stock.core.data.dto.impl.SpRawDataAcqDtoImpl;
-import kmg.im.stock.core.data.dto.impl.SpRawDataAcqMgtDtoImpl;
+import kmg.im.stock.core.data.dto.ImStkSpRawDataAcqDto;
+import kmg.im.stock.core.data.dto.ImStkSpRawDataAcqMgtDto;
+import kmg.im.stock.core.data.dto.impl.ImStkSpRawDataAcqDtoImpl;
+import kmg.im.stock.core.data.dto.impl.ImStkSpRawDataAcqMgtDtoImpl;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.resolver.ImStkLogMessageResolver;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
@@ -97,11 +97,11 @@ public class ImStkSpRawDataDao {
      *                               株価データファイルパス
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
-     * @return 株価生データ取得管理ＤＴＯ
+     * @return 投資株式株価生データ取得管理ＤＴＯ
      */
-    public SpRawDataAcqMgtDto findAll(final Path stockPriceDataFilePath) throws ImStkDomainException {
+    public ImStkSpRawDataAcqMgtDto findAll(final Path stockPriceDataFilePath) throws ImStkDomainException {
 
-        final SpRawDataAcqMgtDto result = new SpRawDataAcqMgtDtoImpl();
+        final ImStkSpRawDataAcqMgtDto result = new ImStkSpRawDataAcqMgtDtoImpl();
 
         /* ファイルを読み込む */
 
@@ -139,15 +139,15 @@ public class ImStkSpRawDataDao {
 
                 // 株価時系列に変換する
                 final String[] datas = DelimiterTypes.COMMA.split(line);
-                final SpRawDataAcqDto spRawDataAcqDto = new SpRawDataAcqDtoImpl();
-                spRawDataAcqDto.setNo(no); // 番号
+                final ImStkSpRawDataAcqDto imStkSpRawDataAcqDto = new ImStkSpRawDataAcqDtoImpl();
+                imStkSpRawDataAcqDto.setNo(no); // 番号
                 try {
-                    spRawDataAcqDto.setDate(LocalDateUtils.parseYyyyMmDd(datas[0])); // 日付
-                    spRawDataAcqDto.setOp(new BigDecimal(datas[1])); // 始値
-                    spRawDataAcqDto.setHp(new BigDecimal(datas[2])); // 高値
-                    spRawDataAcqDto.setLp(new BigDecimal(datas[3])); // 安値
-                    spRawDataAcqDto.setCp(new BigDecimal(datas[4])); // 終値
-                    spRawDataAcqDto.setVolume(Long.parseLong(datas[5])); // 出来高
+                    imStkSpRawDataAcqDto.setDate(LocalDateUtils.parseYyyyMmDd(datas[0])); // 日付
+                    imStkSpRawDataAcqDto.setOp(new BigDecimal(datas[1])); // 始値
+                    imStkSpRawDataAcqDto.setHp(new BigDecimal(datas[2])); // 高値
+                    imStkSpRawDataAcqDto.setLp(new BigDecimal(datas[3])); // 安値
+                    imStkSpRawDataAcqDto.setCp(new BigDecimal(datas[4])); // 終値
+                    imStkSpRawDataAcqDto.setVolume(Long.parseLong(datas[5])); // 出来高
                 } catch (final ArrayIndexOutOfBoundsException e) {
                     // TODO KenichiroArai 2021/05/01 例外処理
                     System.err.println(line);
@@ -155,7 +155,7 @@ public class ImStkSpRawDataDao {
                 }
 
                 // リストに追加する
-                result.addData(spRawDataAcqDto);
+                result.addData(imStkSpRawDataAcqDto);
 
             }
 

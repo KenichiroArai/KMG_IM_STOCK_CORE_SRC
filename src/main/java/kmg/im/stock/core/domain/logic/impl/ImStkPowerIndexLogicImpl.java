@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgDecimal;
 import kmg.im.stock.core.domain.logic.ImStkPowerIndexLogic;
-import kmg.im.stock.core.domain.model.PowerIndexCalcModel;
+import kmg.im.stock.core.domain.model.ImStkPowerIndexCalcModel;
 
 /**
  * 投資株式勢力指数ロジック<br>
@@ -32,7 +32,7 @@ public class ImStkPowerIndexLogicImpl implements ImStkPowerIndexLogic {
      * @return 計算結果のリスト
      */
     @Override
-    public List<Supplier<BigDecimal>> calc(final List<PowerIndexCalcModel> dataList) {
+    public List<Supplier<BigDecimal>> calc(final List<ImStkPowerIndexCalcModel> dataList) {
 
         final List<Supplier<BigDecimal>> result = new ArrayList<>();
 

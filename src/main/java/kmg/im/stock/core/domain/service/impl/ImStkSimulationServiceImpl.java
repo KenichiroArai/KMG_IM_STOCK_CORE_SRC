@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.utils.ListUtils;
 import kmg.im.stock.core.domain.logic.ImStkSimLogic;
-import kmg.im.stock.core.domain.model.PosModel;
-import kmg.im.stock.core.domain.model.StockBrandModel;
-import kmg.im.stock.core.domain.model.StockPriceCalcValueModel;
-import kmg.im.stock.core.domain.model.StockPriceTimeSeriesModel;
+import kmg.im.stock.core.domain.model.ImStkPosModel;
+import kmg.im.stock.core.domain.model.ImStkStockBrandModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceCalcValueModel;
+import kmg.im.stock.core.domain.model.ImStkStockPriceTimeSeriesModel;
 import kmg.im.stock.core.domain.service.ImStkSimulationService;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.resolver.ImStkLogMessageResolver;
@@ -31,7 +31,7 @@ import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
 public class ImStkSimulationServiceImpl implements ImStkSimulationService {
 
     /** ポジションマップ */
-    private final Map<Long, PosModel> posMap;
+    private final Map<Long, ImStkPosModel> posMap;
 
     /** 投資株式ログメッセージリゾルバ */
     private final ImStkLogMessageResolver imStkLogMessageResolver;
@@ -90,35 +90,36 @@ public class ImStkSimulationServiceImpl implements ImStkSimulationService {
     public void simulate(final long stockCode) throws ImStkDomainException {
         // TODO KenichiroArai 2021/05/25 実装中
 
-        /* 株価時系列管理モデルを取得する */
-        final StockBrandModel stockBrandModel = this.imStkSimLogic.getStockPriceTimeSeriesMgtModel(stockCode);
-        if (stockBrandModel == null) {
+        /* 投資株式株銘柄モデルを取得する */
+        final ImStkStockBrandModel imStkStockBrandModel = this.imStkSimLogic.getImStkStockBrandModel(stockCode);
+        if (imStkStockBrandModel == null) {
 
             // TODO KenichiroArai 2021/08/04 エラー対応
             final String errMsg = this.imStkLogMessageResolver.getMessage(ImStkLogMessageTypes.NONE);
             throw new ImStkDomainException(errMsg, ImStkLogMessageTypes.NONE);
         }
         // TODO KenichiroArai 2021/09/07 株銘柄へのモデル変更対応の一時的エラー回避株銘柄
-//        final List<StockPriceTimeSeriesModel> stockPriceTimeSeriesModelList = stockBrandModel.toAllDataList();
-        final List<StockPriceTimeSeriesModel> stockPriceTimeSeriesModelList = new ArrayList<>();
-        if (ListUtils.isEmpty(stockPriceTimeSeriesModelList)) {
+//        final List<ImStkStockPriceTimeSeriesModel> imStkStockPriceTimeSeriesModelList = imStkStockBrandModel.toAllDataList();
+        final List<ImStkStockPriceTimeSeriesModel> imStkStockPriceTimeSeriesModelList = new ArrayList<>();
+        if (ListUtils.isEmpty(imStkStockPriceTimeSeriesModelList)) {
             return;
         }
 
         /* シミュレーションを行う */
-        StockPriceTimeSeriesModel preStockPriceTimeSeriesModel = stockPriceTimeSeriesModelList.get(0);
-        StockPriceCalcValueModel preStockPriceCalcValueMcadhModel = preStockPriceTimeSeriesModel
-            .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
-        for (int i = 1; i < stockPriceTimeSeriesModelList.size(); i++) {
+        ImStkStockPriceTimeSeriesModel preImStkStockPriceTimeSeriesModel = imStkStockPriceTimeSeriesModelList.get(0);
+        ImStkStockPriceCalcValueModel preImStkStockPriceCalcValueMcadhModel = preImStkStockPriceTimeSeriesModel
+            .getImStkStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
+        for (int i = 1; i < imStkStockPriceTimeSeriesModelList.size(); i++) {
 
-            final StockPriceTimeSeriesModel stockPriceTimeSeriesModel = stockPriceTimeSeriesModelList.get(i);
-            final StockPriceCalcValueModel stockPriceCalcValueMcadhModel = stockPriceTimeSeriesModel
-                .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
+            final ImStkStockPriceTimeSeriesModel imStkStockPriceTimeSeriesModel = imStkStockPriceTimeSeriesModelList
+                .get(i);
+            final ImStkStockPriceCalcValueModel stockPriceCalcValueMcadhModel = imStkStockPriceTimeSeriesModel
+                .getImStkStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
 
             try {
                 /* 第一のスクリーン */
                 // 直近の週足２本のＭＡＣＤヒストグラムが変化なしまたは下向きか
-                if (preStockPriceCalcValueMcadhModel.get().compareTo(stockPriceCalcValueMcadhModel.get()) >= 0) {
+                if (preImStkStockPriceCalcValueMcadhModel.get().compareTo(stockPriceCalcValueMcadhModel.get()) >= 0) {
                     // 変化なしまたは下向きである場合
 
                     // 第一のスクリーンを突破しない
@@ -126,8 +127,8 @@ public class ImStkSimulationServiceImpl implements ImStkSimulationService {
                 }
 
                 /* 第二のスクリーン */
-                final StockPriceCalcValueModel stockPriceCalcValuePi2emaModel = stockPriceTimeSeriesModel
-                    .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.PI2EMA);
+                final ImStkStockPriceCalcValueModel stockPriceCalcValuePi2emaModel = imStkStockPriceTimeSeriesModel
+                    .getImStkStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.PI2EMA);
                 // 勢力指数２ＥＭＡが中心線よりも上以上か
                 if (stockPriceCalcValuePi2emaModel.get().compareTo(BigDecimal.ZERO) >= 0) {
                     // 上以上である場合
@@ -135,37 +136,37 @@ public class ImStkSimulationServiceImpl implements ImStkSimulationService {
                     // 第二のスクリーンを突破しない
                     continue;
                 }
-                final StockPriceCalcValueModel stockPriceCalcValueLpil3pModel = stockPriceTimeSeriesModel
-                    .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.LOWEST_PRICE_IN_LAST3_PERIODS);
+                final ImStkStockPriceCalcValueModel stockPriceCalcValueLpil3pModel = imStkStockPriceTimeSeriesModel
+                    .getImStkStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.LOWEST_PRICE_IN_LAST3_PERIODS);
                 // 過去３日間の最安値より安値が安いか
-                if (stockPriceCalcValueLpil3pModel.get().compareTo(stockPriceTimeSeriesModel.getLp()) < 0) {
+                if (stockPriceCalcValueLpil3pModel.get().compareTo(imStkStockPriceTimeSeriesModel.getLp()) < 0) {
                     // 安い場合
 
                     // 第二のスクリーンを突破しない
                     continue;
                 }
 
-                System.out.println(stockPriceTimeSeriesModel.getPeriodStartDate());
+                System.out.println(imStkStockPriceTimeSeriesModel.getPeriodStartDate());
 
             } finally {
-                preStockPriceTimeSeriesModel = stockPriceTimeSeriesModelList.get(i);
-                preStockPriceCalcValueMcadhModel = preStockPriceTimeSeriesModel
-                    .getStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
+                preImStkStockPriceTimeSeriesModel = imStkStockPriceTimeSeriesModelList.get(i);
+                preImStkStockPriceCalcValueMcadhModel = preImStkStockPriceTimeSeriesModel
+                    .getImStkStockPriceCalcValueModel(ImStkStockPriceCalcValueTypeTypes.MCADH);
             }
         }
     }
 
     /**
-     * ポジションモデルを返す<br>
+     * 投資株式ポジションモデルを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return ポジションモデル
+     * @return 投資株式ポジションモデル
      */
     @SuppressWarnings("static-method")
-    private PosModel getPosModel() {
-        final PosModel result = new PosModel();
+    private ImStkPosModel getImStkPosModel() {
+        final ImStkPosModel result = new ImStkPosModel();
         return result;
     }
 

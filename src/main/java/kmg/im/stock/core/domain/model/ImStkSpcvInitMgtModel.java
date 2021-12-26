@@ -14,15 +14,15 @@ import java.util.function.Supplier;
 public interface ImStkSpcvInitMgtModel {
 
     /**
-     * シンプル株価時系列管理モデルを取り込む<br>
+     * 投資株式シンプル株価時系列モデルを取り込む<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param simpleSptsMgtDailyModel
-     *                                シンプル株価時系列管理モデル
+     * @param imStkSimpleSptsMgtModel
+     *                                投資株式シンプル株価時系列モデル
      */
-    void from(SimpleSptsMgtModel simpleSptsMgtDailyModel);
+    void from(ImStkSimpleSptsMgtModel imStkSimpleSptsMgtModel);
 
     /**
      * 投資株式株価計算値初期化モデルのリストをクリアする<br>
@@ -96,12 +96,12 @@ public interface ImStkSpcvInitMgtModel {
     List<Supplier<BigDecimal>> toSupplierDataList();
 
     /**
-     * 勢力指数計算モデルリストとして返す<br>
+     * 投資株式勢力指数計算モデルリストとして返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return 勢力指数計算モデルリスト
+     * @return 投資株式勢力指数計算モデルリスト
      */
-    List<PowerIndexCalcModel> toPowerIndexCalcModelList();
+    List<ImStkPowerIndexCalcModel> toImStkPowerIndexCalcModelList();
 }

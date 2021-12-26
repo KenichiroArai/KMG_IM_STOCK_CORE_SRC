@@ -3,7 +3,7 @@ package kmg.im.stock.core.domain.service;
 import java.time.LocalDate;
 import java.util.Map;
 
-import kmg.im.stock.core.domain.model.SptsptModel;
+import kmg.im.stock.core.domain.model.ImStkSptsptModel;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
@@ -55,7 +55,7 @@ public interface ImStkSptsptService {
         throws ImStkDomainException;
 
     /**
-     * 期間の種類ごとの株価時系列期間の種類のマップを返す<br>
+     * 期間の種類ごとの投資株式株価時系列期間の種類モデルのマップを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -70,6 +70,6 @@ public interface ImStkSptsptService {
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
-    Map<ImStkPeriodTypeTypes, SptsptModel> findSptsptModelMap(long stockBrandId,
+    Map<ImStkPeriodTypeTypes, ImStkSptsptModel> findImStkSptsptModelMap(long stockBrandId,
         ImStkPeriodTypeTypes imStkPeriodTypeTypes, final LocalDate baseDate) throws ImStkDomainException;
 }

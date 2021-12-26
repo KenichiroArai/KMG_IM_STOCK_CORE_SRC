@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import kmg.im.stock.core.domain.logic.ImStkSptsptLogic;
-import kmg.im.stock.core.domain.model.SptsptModel;
+import kmg.im.stock.core.domain.model.ImStkSptsptModel;
 import kmg.im.stock.core.domain.service.ImStkSptsptService;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
@@ -99,7 +99,7 @@ public class ImStkSptsptServiceImpl implements ImStkSptsptService {
 
     // TODO KenichiroArai 2021/10/26 不要なら削除する
     /**
-     * 期間の種類ごとの株価時系列期間の種類のマップを返す<br>
+     * 期間の種類ごとの投資株式株価時系列期間の種類モデルのマップを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -115,10 +115,10 @@ public class ImStkSptsptServiceImpl implements ImStkSptsptService {
      *                              投資株式ドメイン例外
      */
     @Override
-    public Map<ImStkPeriodTypeTypes, SptsptModel> findSptsptModelMap(final long stockBrandId,
+    public Map<ImStkPeriodTypeTypes, ImStkSptsptModel> findImStkSptsptModelMap(final long stockBrandId,
         final ImStkPeriodTypeTypes imStkPeriodTypeTypes, final LocalDate baseDate) throws ImStkDomainException {
-        final Map<ImStkPeriodTypeTypes, SptsptModel> result = this.imStkSptsptLogic.findSptsptModelMap(stockBrandId,
-            imStkPeriodTypeTypes, baseDate);
+        final Map<ImStkPeriodTypeTypes, ImStkSptsptModel> result = this.imStkSptsptLogic
+            .findImStkSptsptModelMap(stockBrandId, imStkPeriodTypeTypes, baseDate);
         return result;
     }
 

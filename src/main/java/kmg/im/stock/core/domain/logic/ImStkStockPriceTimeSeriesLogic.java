@@ -2,8 +2,8 @@ package kmg.im.stock.core.domain.logic;
 
 import java.util.List;
 
-import kmg.im.stock.core.domain.model.SimpleSptsMgtModel;
-import kmg.im.stock.core.domain.model.SptsRegDataModel;
+import kmg.im.stock.core.domain.model.ImStkSimpleSptsMgtModel;
+import kmg.im.stock.core.domain.model.ImStkSptsRegDataModel;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 
@@ -34,7 +34,7 @@ public interface ImStkStockPriceTimeSeriesLogic {
         throws ImStkDomainException;
 
     /**
-     * 期間の種類で株価時系列登録データモデルのリストを登録する<br>
+     * 期間の種類で投資株式株価時系列登録データモデルのリストを登録する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -42,11 +42,11 @@ public interface ImStkStockPriceTimeSeriesLogic {
      * @param periodTypeTypes
      *                              投資株式期間の種類の種類
      * @param sptsMainDataModelList
-     *                              株価時系列登録データモデルのリスト
+     *                              投資株式株価時系列登録データモデルのリスト
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
-    void register(ImStkPeriodTypeTypes periodTypeTypes, final List<SptsRegDataModel> sptsMainDataModelList)
+    void register(ImStkPeriodTypeTypes periodTypeTypes, final List<ImStkSptsRegDataModel> sptsMainDataModelList)
         throws ImStkDomainException;
 
     /**
@@ -59,10 +59,10 @@ public interface ImStkStockPriceTimeSeriesLogic {
      *                        株銘柄ＩＤ
      * @param periodTypeTypes
      *                        投資株式期間の種類の種類
-     * @return シンプル株価時系列管理モデル
+     * @return 投資株式シンプル株価時系列モデル
      * @throws ImStkDomainException
      *                              投資株式ドメイン例外
      */
-    SimpleSptsMgtModel findSimpleBySbIdAndPti(final long sbId, final ImStkPeriodTypeTypes periodTypeTypes)
+    ImStkSimpleSptsMgtModel findSimpleBySbIdAndPti(final long sbId, final ImStkPeriodTypeTypes periodTypeTypes)
         throws ImStkDomainException;
 }
