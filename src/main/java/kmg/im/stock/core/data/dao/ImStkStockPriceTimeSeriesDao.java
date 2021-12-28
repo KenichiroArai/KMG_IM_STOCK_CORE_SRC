@@ -12,8 +12,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import kmg.core.domain.model.SqlPathModel;
-import kmg.core.domain.model.impl.SqlPathModelImpl;
+import kmg.core.domain.model.KmgSqlPathModel;
+import kmg.core.domain.model.impl.KmgSqlPathModelImpl;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.im.stock.core.data.dto.ImStkSimpleSptsSearchConditionDto;
@@ -41,19 +41,19 @@ public class ImStkStockPriceTimeSeriesDao {
     private static final Class<?> MYSELF_CLASS = ImStkStockPriceTimeSeriesDao.class;
 
     /** 株価銘柄ＩＤと投資株式期間の種類の種類に該当するデータを削除するＳＱＬパス */
-    private static final SqlPathModel DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH = new SqlPathModelImpl(
+    private static final KmgSqlPathModel DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH = new KmgSqlPathModelImpl(
         ImStkStockPriceTimeSeriesDao.MYSELF_CLASS, Paths.get("deleteBySbIdAndImStkPeriodTypeTypes.sql"));
 
     /** 株価時系列を削除するＳＱＬパス */
-    private static final SqlPathModel DELETE_SQL_PATH = new SqlPathModelImpl(ImStkStockPriceTimeSeriesDao.MYSELF_CLASS,
-        Paths.get("delete.sql"));
+    private static final KmgSqlPathModel DELETE_SQL_PATH = new KmgSqlPathModelImpl(
+        ImStkStockPriceTimeSeriesDao.MYSELF_CLASS, Paths.get("delete.sql"));
 
     /** 投資株式期間の種類の種類と投資株式株価時系列ＤＴＯを基に挿入するＳＱＬパス */
-    private static final SqlPathModel INSERT_BY_PTT_AND_SPTS_DTO_SQL_PATH = new SqlPathModelImpl(
+    private static final KmgSqlPathModel INSERT_BY_PTT_AND_SPTS_DTO_SQL_PATH = new KmgSqlPathModelImpl(
         ImStkStockPriceTimeSeriesDao.MYSELF_CLASS, Paths.get("insertByPttAndSptsDto.sql"));
 
     /** 株銘柄ＩＤと投資株式期間の種類の種類を基に投資株式株価時系列ＤＴＯのリストを返す検索するＳＱＬパス */
-    private static final SqlPathModel FIND_BY_SB_ID_AND_PTT_SQL_PATH = new SqlPathModelImpl(
+    private static final KmgSqlPathModel FIND_BY_SB_ID_AND_PTT_SQL_PATH = new KmgSqlPathModelImpl(
         ImStkStockPriceTimeSeriesDao.MYSELF_CLASS, Paths.get("findBySbIdAndPtt.sql"));
 
     /** データベース接続 */

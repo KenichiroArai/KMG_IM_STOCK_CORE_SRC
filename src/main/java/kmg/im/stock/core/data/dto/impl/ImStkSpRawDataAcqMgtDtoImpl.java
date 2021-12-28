@@ -3,7 +3,7 @@ package kmg.im.stock.core.data.dto.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.data.dto.ImStkSpRawDataAcqDto;
 import kmg.im.stock.core.data.dto.ImStkSpRawDataAcqMgtDto;
 
@@ -54,7 +54,7 @@ public class ImStkSpRawDataAcqMgtDtoImpl implements ImStkSpRawDataAcqMgtDto {
     public boolean isDataListEmpty() {
         boolean result = true;
 
-        if (ListUtils.isEmpty(this.dataList)) {
+        if (KmgListUtils.isEmpty(this.dataList)) {
             return result;
         }
 
@@ -101,7 +101,7 @@ public class ImStkSpRawDataAcqMgtDtoImpl implements ImStkSpRawDataAcqMgtDto {
      */
     @Override
     public void addAllData(final List<ImStkSpRawDataAcqDto> addData) {
-        if (ListUtils.isEmpty(addData)) {
+        if (KmgListUtils.isEmpty(addData)) {
             return;
         }
 

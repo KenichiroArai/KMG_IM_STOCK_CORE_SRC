@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.model.ImStkSpcvInitMgtModel;
 import kmg.im.stock.core.domain.model.ImStkSpcvInitModel;
 import kmg.im.stock.core.domain.model.ImStkStockPriceCalcValueMgtModel;
@@ -89,7 +89,7 @@ public class ImStkStockPriceCalcValueMgtModelImpl implements ImStkStockPriceCalc
     public boolean isDataListEmpty() {
         boolean result = true;
 
-        if (ListUtils.isEmpty(this.dataList)) {
+        if (KmgListUtils.isEmpty(this.dataList)) {
             return result;
         }
 
@@ -136,7 +136,7 @@ public class ImStkStockPriceCalcValueMgtModelImpl implements ImStkStockPriceCalc
      */
     @Override
     public void addAllData(final List<ImStkStockPriceCalcValueModel> addData) {
-        if (ListUtils.isEmpty(addData)) {
+        if (KmgListUtils.isEmpty(addData)) {
             return;
         }
 

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.logic.ImStkSimLogic;
 import kmg.im.stock.core.domain.model.ImStkPosModel;
 import kmg.im.stock.core.domain.model.ImStkStockBrandModel;
@@ -101,7 +101,7 @@ public class ImStkSimulationServiceImpl implements ImStkSimulationService {
         // TODO KenichiroArai 2021/09/07 株銘柄へのモデル変更対応の一時的エラー回避株銘柄
 //        final List<ImStkStockPriceTimeSeriesModel> imStkStockPriceTimeSeriesModelList = imStkStockBrandModel.toAllDataList();
         final List<ImStkStockPriceTimeSeriesModel> imStkStockPriceTimeSeriesModelList = new ArrayList<>();
-        if (ListUtils.isEmpty(imStkStockPriceTimeSeriesModelList)) {
+        if (KmgListUtils.isEmpty(imStkStockPriceTimeSeriesModelList)) {
             return;
         }
 

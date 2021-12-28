@@ -10,8 +10,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import kmg.core.domain.model.SqlPathModel;
-import kmg.core.domain.model.impl.SqlPathModelImpl;
+import kmg.core.domain.model.KmgSqlPathModel;
+import kmg.core.domain.model.impl.KmgSqlPathModelImpl;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.im.stock.core.data.dto.ImStkSimDto;
 import kmg.im.stock.core.data.dto.ImStkStockBrandDto;
@@ -30,7 +30,8 @@ import kmg.im.stock.core.data.dto.impl.ImStkStockBrandDtoImpl;
 public class ImStkSimDao {
 
     /** 検索するSQL */
-    private static final SqlPathModel FIND_SQL_PATH = new SqlPathModelImpl(ImStkSimDao.class, Paths.get("find.sql"));
+    private static final KmgSqlPathModel FIND_SQL_PATH = new KmgSqlPathModelImpl(ImStkSimDao.class,
+        Paths.get("find.sql"));
 
     /** データベース接続 */
     private final NamedParameterJdbcTemplate jdbc;

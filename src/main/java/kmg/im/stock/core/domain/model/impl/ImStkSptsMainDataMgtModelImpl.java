@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.model.ImStkPowerIndexCalcModel;
 import kmg.im.stock.core.domain.model.ImStkSptsMainDataMgtModel;
 import kmg.im.stock.core.domain.model.ImStkSptsRegDataModel;
@@ -58,7 +58,7 @@ public class ImStkSptsMainDataMgtModelImpl implements ImStkSptsMainDataMgtModel 
     public boolean isDataListEmpty() {
         boolean result = true;
 
-        if (ListUtils.isEmpty(this.dataList)) {
+        if (KmgListUtils.isEmpty(this.dataList)) {
             return result;
         }
 
@@ -105,7 +105,7 @@ public class ImStkSptsMainDataMgtModelImpl implements ImStkSptsMainDataMgtModel 
      */
     @Override
     public void addAllData(final List<ImStkSptsRegDataModel> addData) {
-        if (ListUtils.isEmpty(addData)) {
+        if (KmgListUtils.isEmpty(addData)) {
             return;
         }
 

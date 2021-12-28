@@ -3,7 +3,7 @@ package kmg.im.stock.core.domain.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.model.ImStkSimpleSptsMgtModel;
 import kmg.im.stock.core.domain.model.ImStkSimpleSptsModel;
 
@@ -54,7 +54,7 @@ public class ImStkSimpleSptsMgtModelImpl implements ImStkSimpleSptsMgtModel {
     public boolean isDataListEmpty() {
         boolean result = true;
 
-        if (ListUtils.isEmpty(this.dataList)) {
+        if (KmgListUtils.isEmpty(this.dataList)) {
             return result;
         }
 
@@ -101,7 +101,7 @@ public class ImStkSimpleSptsMgtModelImpl implements ImStkSimpleSptsMgtModel {
      */
     @Override
     public void addAllData(final List<ImStkSimpleSptsModel> addData) {
-        if (ListUtils.isEmpty(addData)) {
+        if (KmgListUtils.isEmpty(addData)) {
             return;
         }
 

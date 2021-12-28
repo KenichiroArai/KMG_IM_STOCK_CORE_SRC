@@ -3,7 +3,7 @@ package kmg.im.stock.core.data.dto.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.data.dto.ImStkStockPriceTimeSeriesDto;
 import kmg.im.stock.core.data.dto.ImStkStockPriceTimeSeriesMgtDto;
 
@@ -54,7 +54,7 @@ public class ImStkStockPriceTimeSeriesMgtDtoImpl implements ImStkStockPriceTimeS
     public boolean isDataListEmpty() {
         boolean result = true;
 
-        if (ListUtils.isEmpty(this.dataList)) {
+        if (KmgListUtils.isEmpty(this.dataList)) {
             return result;
         }
 
@@ -101,7 +101,7 @@ public class ImStkStockPriceTimeSeriesMgtDtoImpl implements ImStkStockPriceTimeS
      */
     @Override
     public void addAllData(final List<ImStkStockPriceTimeSeriesDto> addData) {
-        if (ListUtils.isEmpty(addData)) {
+        if (KmgListUtils.isEmpty(addData)) {
             return;
         }
 

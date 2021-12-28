@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import kmg.core.infrastructure.type.KmgString;
-import kmg.core.infrastructure.types.CharsetTypes;
-import kmg.core.infrastructure.types.DelimiterTypes;
-import kmg.core.infrastructure.utils.LocalDateUtils;
+import kmg.core.infrastructure.types.KmgCharsetTypes;
+import kmg.core.infrastructure.types.KmgDelimiterTypes;
+import kmg.core.infrastructure.utils.KmgLocalDateUtils;
 import kmg.im.stock.core.data.dto.ImStkSpRawDataAcqDto;
 import kmg.im.stock.core.data.dto.ImStkSpRawDataAcqMgtDto;
 import kmg.im.stock.core.data.dto.impl.ImStkSpRawDataAcqDtoImpl;
@@ -106,7 +106,7 @@ public class ImStkSpRawDataDao {
         /* ファイルを読み込む */
 
         try (final BufferedReader br = Files.newBufferedReader(stockPriceDataFilePath,
-            CharsetTypes.MS932.toCharset());) {
+            KmgCharsetTypes.MS932.toCharset());) {
 
             // 一行読み込む
             String line = br.readLine();
@@ -138,11 +138,11 @@ public class ImStkSpRawDataDao {
                 no++;
 
                 // 株価時系列に変換する
-                final String[] datas = DelimiterTypes.COMMA.split(line);
+                final String[] datas = KmgDelimiterTypes.COMMA.split(line);
                 final ImStkSpRawDataAcqDto imStkSpRawDataAcqDto = new ImStkSpRawDataAcqDtoImpl();
                 imStkSpRawDataAcqDto.setNo(no); // 番号
                 try {
-                    imStkSpRawDataAcqDto.setDate(LocalDateUtils.parseYyyyMmDd(datas[0])); // 日付
+                    imStkSpRawDataAcqDto.setDate(KmgLocalDateUtils.parseYyyyMmDd(datas[0])); // 日付
                     imStkSpRawDataAcqDto.setOp(new BigDecimal(datas[1])); // 始値
                     imStkSpRawDataAcqDto.setHp(new BigDecimal(datas[2])); // 高値
                     imStkSpRawDataAcqDto.setLp(new BigDecimal(datas[3])); // 安値

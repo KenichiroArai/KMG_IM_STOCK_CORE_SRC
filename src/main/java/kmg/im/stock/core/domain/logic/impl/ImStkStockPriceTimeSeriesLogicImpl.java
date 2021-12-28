@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.exception.KmgDomainException;
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.data.dao.ImStkStockPriceTimeSeriesDao;
 import kmg.im.stock.core.data.dto.ImStkStockPriceTimeSeriesDto;
 import kmg.im.stock.core.data.dto.impl.ImStkStockPriceTimeSeriesDtoImpl;
@@ -94,7 +94,7 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
     public void register(final ImStkPeriodTypeTypes imStkPeriodTypeTypes,
         final List<ImStkSptsRegDataModel> imStkSptsRegDataModelList) throws ImStkDomainException {
 
-        if (ListUtils.isEmpty(imStkSptsRegDataModelList)) {
+        if (KmgListUtils.isEmpty(imStkSptsRegDataModelList)) {
             return;
         }
 

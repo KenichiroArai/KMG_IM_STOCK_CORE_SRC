@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import kmg.core.domain.model.SqlPathModel;
-import kmg.core.domain.model.impl.SqlPathModelImpl;
+import kmg.core.domain.model.KmgSqlPathModel;
+import kmg.core.domain.model.impl.KmgSqlPathModelImpl;
 import kmg.core.infrastructure.exception.KmgDomainException;
 import kmg.core.infrastructure.type.KmgString;
 import kmg.im.stock.core.data.dto.ImStkSptsptDeleteCondDto;
@@ -36,15 +36,15 @@ public class ImStkSptsptDao {
     private static final Class<?> MYSELF_CLASS = ImStkSptsptDao.class;
 
     /** 株価銘柄ＩＤと投資株式期間の種類の種類に該当するデータを削除するＳＱＬパス */
-    private static final SqlPathModel DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH = new SqlPathModelImpl(
+    private static final KmgSqlPathModel DELETE_BY_SB_ID_AND_PERIOD_TYPE_TYPES_SQL_PATH = new KmgSqlPathModelImpl(
         ImStkSptsptDao.MYSELF_CLASS, Paths.get("deleteBySbIdAndImStkPeriodTypeTypes.sql"));
 
     /** 識別番号を取得するＳＱＬパス */
-    private static final SqlPathModel GET_ID_SQL_PATH = new SqlPathModelImpl(ImStkSptsptDao.MYSELF_CLASS,
+    private static final KmgSqlPathModel GET_ID_SQL_PATH = new KmgSqlPathModelImpl(ImStkSptsptDao.MYSELF_CLASS,
         Paths.get("getId.sql"));
 
     /** 株銘柄ＩＤと投資株式期間の種類の種類を基に挿入するＳＱＬパス */
-    private static final SqlPathModel INSERT_BY_SB_ID_AND_PTT_SQL_PATH = new SqlPathModelImpl(
+    private static final KmgSqlPathModel INSERT_BY_SB_ID_AND_PTT_SQL_PATH = new KmgSqlPathModelImpl(
         ImStkSptsptDao.MYSELF_CLASS, Paths.get("insertBySbIdAndPtt.sql"));
 
     /** データベース接続 */

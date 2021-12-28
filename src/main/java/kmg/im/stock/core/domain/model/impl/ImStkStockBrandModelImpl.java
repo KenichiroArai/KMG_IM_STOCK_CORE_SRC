@@ -5,8 +5,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import kmg.core.infrastructure.utils.ListUtils;
-import kmg.core.infrastructure.utils.MapUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
+import kmg.core.infrastructure.utils.KmgMapUtils;
 import kmg.im.stock.core.domain.model.ImStkSptsptModel;
 import kmg.im.stock.core.domain.model.ImStkStockBrandModel;
 import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
@@ -120,7 +120,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
     public boolean isSptspMapEmpty() {
         boolean result = true;
 
-        if (MapUtils.isEmpty(this.sptsptMap)) {
+        if (KmgMapUtils.isEmpty(this.sptsptMap)) {
             return result;
         }
 
@@ -167,7 +167,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
      */
     @Override
     public void addAllImStkSptsptModel(final List<ImStkSptsptModel> sptsptModelList) {
-        if (ListUtils.isEmpty(sptsptModelList)) {
+        if (KmgListUtils.isEmpty(sptsptModelList)) {
             return;
         }
 

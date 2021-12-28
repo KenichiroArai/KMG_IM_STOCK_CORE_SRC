@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.model.ImStkPowerIndexCalcModel;
 import kmg.im.stock.core.domain.model.ImStkSimpleSptsMgtModel;
 import kmg.im.stock.core.domain.model.ImStkSimpleSptsModel;
@@ -80,7 +80,7 @@ public class ImStkSpcvInitMgtModelImpl implements ImStkSpcvInitMgtModel {
     public boolean isDataListEmpty() {
         boolean result = true;
 
-        if (ListUtils.isEmpty(this.dataList)) {
+        if (KmgListUtils.isEmpty(this.dataList)) {
             return result;
         }
 
@@ -127,7 +127,7 @@ public class ImStkSpcvInitMgtModelImpl implements ImStkSpcvInitMgtModel {
      */
     @Override
     public void addAllData(final List<ImStkSpcvInitModel> addData) {
-        if (ListUtils.isEmpty(addData)) {
+        if (KmgListUtils.isEmpty(addData)) {
             return;
         }
 

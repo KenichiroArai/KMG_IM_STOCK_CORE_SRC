@@ -7,8 +7,8 @@ import java.util.TreeMap;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import kmg.core.infrastructure.utils.ListUtils;
-import kmg.core.infrastructure.utils.MapUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
+import kmg.core.infrastructure.utils.KmgMapUtils;
 import kmg.im.stock.core.domain.model.ImStkPowerIndexCalcModel;
 import kmg.im.stock.core.domain.model.ImStkSptsptModel;
 import kmg.im.stock.core.domain.model.ImStkStockPriceTimeSeriesModel;
@@ -88,7 +88,7 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     public boolean isSptsModelMapEmpty() {
         boolean result = true;
 
-        if (MapUtils.isEmpty(this.sptsModelMap)) {
+        if (KmgMapUtils.isEmpty(this.sptsModelMap)) {
             return result;
         }
 
@@ -135,7 +135,7 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
      */
     @Override
     public void addAllSptsModelList(final List<ImStkStockPriceTimeSeriesModel> sptsModelList) {
-        if (ListUtils.isEmpty(sptsModelList)) {
+        if (KmgListUtils.isEmpty(sptsModelList)) {
             return;
         }
 

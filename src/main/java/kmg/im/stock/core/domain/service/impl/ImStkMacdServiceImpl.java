@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.logic.ImStkEmaLogic;
 import kmg.im.stock.core.domain.logic.ImStkMacdLogic;
 import kmg.im.stock.core.domain.service.ImStkMacdService;
@@ -305,7 +305,7 @@ public class ImStkMacdServiceImpl implements ImStkMacdService {
     @Override
     public void clacSignal() {
 
-        if (ListUtils.isEmpty(this.lineList)) {
+        if (KmgListUtils.isEmpty(this.lineList)) {
             this.clacLine();
         } else {
             this.signalList.clear();
@@ -328,7 +328,7 @@ public class ImStkMacdServiceImpl implements ImStkMacdService {
     @Override
     public void clacHistogram() {
 
-        if (ListUtils.isEmpty(this.signalList)) {
+        if (KmgListUtils.isEmpty(this.signalList)) {
             this.clacSignal();
         } else {
             this.histogramList.clear();

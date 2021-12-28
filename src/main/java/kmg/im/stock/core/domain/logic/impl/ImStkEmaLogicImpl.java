@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.type.KmgDecimal;
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.logic.ImStkEmaLogic;
 import kmg.im.stock.core.domain.logic.ImStkSmaLogic;
 
@@ -58,7 +58,7 @@ public class ImStkEmaLogicImpl implements ImStkEmaLogic {
 
         final List<Supplier<BigDecimal>> result = new ArrayList<>();
 
-        if (ListUtils.isEmpty(dataList)) {
+        if (KmgListUtils.isEmpty(dataList)) {
             return result;
         }
 

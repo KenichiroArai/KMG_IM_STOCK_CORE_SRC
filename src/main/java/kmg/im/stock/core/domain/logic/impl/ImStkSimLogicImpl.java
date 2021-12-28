@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.exception.KmgDomainException;
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.data.dao.ImStkSimDao;
 import kmg.im.stock.core.data.dto.ImStkSimDto;
 import kmg.im.stock.core.domain.logic.ImStkSimLogic;
@@ -76,7 +76,7 @@ public class ImStkSimLogicImpl implements ImStkSimLogic {
         }
 
         /* 株価銘柄を設定する */
-        if (ListUtils.isNotEmpty(imStkSimDtoList)) {
+        if (KmgListUtils.isNotEmpty(imStkSimDtoList)) {
             final ImStkSimDto imStkSimDto = imStkSimDtoList.get(0);
 
             result.setStockBrandId(imStkSimDto.getStockBrandId()); // 株銘柄ID

@@ -3,7 +3,7 @@ package kmg.im.stock.core.domain.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import kmg.core.infrastructure.utils.ListUtils;
+import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.domain.model.ImStkSpRawDataAcqMgtModel;
 import kmg.im.stock.core.domain.model.ImStkSpRawDataAcqModel;
 
@@ -85,7 +85,7 @@ public class ImStkSpRawDataAcqMgtModelImpl implements ImStkSpRawDataAcqMgtModel 
     public boolean isDataListEmpty() {
         boolean result = true;
 
-        if (ListUtils.isEmpty(this.dataList)) {
+        if (KmgListUtils.isEmpty(this.dataList)) {
             return result;
         }
 
@@ -132,7 +132,7 @@ public class ImStkSpRawDataAcqMgtModelImpl implements ImStkSpRawDataAcqMgtModel 
      */
     @Override
     public void addAllData(final List<ImStkSpRawDataAcqModel> addData) {
-        if (ListUtils.isEmpty(addData)) {
+        if (KmgListUtils.isEmpty(addData)) {
             return;
         }
 
