@@ -28,10 +28,10 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     private final ImStkPeriodTypeTypes imStkPeriodTypeTypes;
 
     /**
-     * 投資株式投資株式勢力指数計算モデルのマップ<br>
+     * 投資株式株価時系列モデルのマップ<br>
      * <p>
      * キー：番号<br>
-     * 値：投資株式投資株式勢力指数計算モデル<br>
+     * 値：投資株式株価時系列モデル<br>
      * </p>
      */
     private final SortedMap<Long, ImStkStockPriceTimeSeriesModel> sptsModelMap;
@@ -65,7 +65,7 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 投資株式投資株式勢力指数計算モデルのマップをクリアする<br>
+     * 投資株式株価時系列モデルのマップをクリアする<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -77,7 +77,7 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 投資株式投資株式勢力指数計算モデルのマップが空か<br>
+     * 投資株式株価時系列モデルのマップが空か<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -97,7 +97,7 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 投資株式投資株式勢力指数計算モデルのマップが空ではないか<br>
+     * 投資株式株価時系列モデルのマップが空ではないか<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -111,13 +111,13 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 投資株式投資株式勢力指数計算モデルを追加する<br>
+     * 投資株式株価時系列モデルを追加する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
      * @param sptsModel
-     *                  投資株式投資株式勢力指数計算モデル
+     *                  投資株式株価時系列モデル
      */
     @Override
     public void addSptsModel(final ImStkStockPriceTimeSeriesModel sptsModel) {
@@ -125,13 +125,13 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 投資株式投資株式勢力指数計算モデルのリストを全て追加する<br>
+     * 投資株式株価時系列モデルのリストを全て追加する<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
      * @param sptsModelList
-     *                      投資株式投資株式勢力指数計算モデルのリスト
+     *                      投資株式株価時系列モデルのリスト
      */
     @Override
     public void addAllSptsModelList(final List<ImStkStockPriceTimeSeriesModel> sptsModelList) {
@@ -145,7 +145,7 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 投資株式投資株式勢力指数計算モデルのマップを返す<br>
+     * 投資株式株価時系列モデルのマップを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -159,7 +159,7 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 番号に該当する投資株式投資株式勢力指数計算モデルを返す<br>
+     * 番号に該当する投資株式株価時系列モデルを返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
@@ -175,12 +175,12 @@ public class ImStkSptsptModelImpl implements ImStkSptsptModel {
     }
 
     /**
-     * 投資株式投資株式勢力指数計算モデルの全リストとして返す<br>
+     * 投資株式株価時系列モデルの全リストとして返す<br>
      *
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @return 投資株式投資株式勢力指数計算モデルのリスト
+     * @return 投資株式株価時系列モデルのリスト
      */
     @Override
     public List<ImStkStockPriceTimeSeriesModel> toAllSptsModelList() {

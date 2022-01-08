@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.exception.KmgDomainException;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.data.dao.ImStkStockPriceTimeSeriesDao;
 import kmg.im.stock.core.data.dto.ImStkStockPriceTimeSeriesDto;
@@ -69,7 +70,7 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
             result = this.stockPriceTimeSeriesDao.deleteBySbIdAndImStkPeriodTypeTypes(sbId, imStkPeriodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);
@@ -108,7 +109,7 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
                 this.stockPriceTimeSeriesDao.insertByPttAndSptsDto(imStkPeriodTypeTypes, imStkStockPriceTimeSeriesDto);
             } catch (final KmgDomainException e) {
                 // TODO KenichiroArai 2021/06/12 例外処理
-                final String errMsg = "";
+                final String errMsg = KmgString.EMPTY;
                 final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
                 final Object[] logMsgArg = {};
                 throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);
@@ -142,7 +143,7 @@ public class ImStkStockPriceTimeSeriesLogicImpl implements ImStkStockPriceTimeSe
                 imStkPeriodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/11/24 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);

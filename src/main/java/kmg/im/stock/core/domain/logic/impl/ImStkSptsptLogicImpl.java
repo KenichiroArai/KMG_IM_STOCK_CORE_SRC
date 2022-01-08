@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.exception.KmgDomainException;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.im.stock.core.data.dao.ImStkSptsptDao;
 import kmg.im.stock.core.domain.logic.ImStkSptsptLogic;
 import kmg.im.stock.core.domain.model.ImStkSptsptModel;
@@ -62,7 +63,7 @@ public class ImStkSptsptLogicImpl implements ImStkSptsptLogic {
             result = this.imStkSptsptDao.deleteBySbIdAndImStkPeriodTypeTypes(sbId, imStkPeriodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);
@@ -101,7 +102,7 @@ public class ImStkSptsptLogicImpl implements ImStkSptsptLogic {
             return result;
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);
@@ -131,7 +132,7 @@ public class ImStkSptsptLogicImpl implements ImStkSptsptLogic {
             result = this.imStkSptsptDao.insertBySbIdAndPtt(stockBrandId, imStkPeriodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/09 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);

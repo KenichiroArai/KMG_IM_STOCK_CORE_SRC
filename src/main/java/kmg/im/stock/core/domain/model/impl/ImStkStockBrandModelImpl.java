@@ -3,7 +3,6 @@ package kmg.im.stock.core.domain.model.impl;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.core.infrastructure.utils.KmgMapUtils;
@@ -27,7 +26,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
     private long stockBrandCode;
 
     /** 投資株式株価時系列期間の種類のマップ */
-    private final SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> sptsptMap;
+    private final SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> imStkSptsptMap;
 
     /**
      * デフォルトコンストラクタ<br>
@@ -37,7 +36,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
      * @version 1.0.0
      */
     public ImStkStockBrandModelImpl() {
-        this.sptsptMap = new TreeMap<>();
+        this.imStkSptsptMap = new TreeMap<>();
     }
 
     /**
@@ -105,7 +104,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
      */
     @Override
     public void clearSptspMap() {
-        this.sptsptMap.clear();
+        this.imStkSptsptMap.clear();
     }
 
     /**
@@ -120,7 +119,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
     public boolean isSptspMapEmpty() {
         boolean result = true;
 
-        if (KmgMapUtils.isEmpty(this.sptsptMap)) {
+        if (KmgMapUtils.isEmpty(this.imStkSptsptMap)) {
             return result;
         }
 
@@ -148,12 +147,12 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param sptsptModel
-     *                    投資株式株価時系列期間の種類モデル
+     * @param imStkSptsptModel
+     *                         投資株式株価時系列期間の種類モデル
      */
     @Override
-    public void addImStkSptsptModel(final ImStkSptsptModel sptsptModel) {
-        this.sptsptMap.put(sptsptModel.getImStkPeriodTypeTypes(), sptsptModel);
+    public void addImStkSptsptModel(final ImStkSptsptModel imStkSptsptModel) {
+        this.imStkSptsptMap.put(imStkSptsptModel.getImStkPeriodTypeTypes(), imStkSptsptModel);
     }
 
     /**
@@ -162,18 +161,37 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param sptsptModelList
-     *                        投資株式株価時系列期間の種類モデルのリスト
+     * @param imStkSptsptModelList
+     *                             投資株式株価時系列期間の種類モデルのリスト
      */
     @Override
-    public void addAllImStkSptsptModel(final List<ImStkSptsptModel> sptsptModelList) {
-        if (KmgListUtils.isEmpty(sptsptModelList)) {
+    public void addAllImStkSptsptModel(final List<ImStkSptsptModel> imStkSptsptModelList) {
+        if (KmgListUtils.isEmpty(imStkSptsptModelList)) {
             return;
         }
 
-        for (final ImStkSptsptModel sptsptModel : sptsptModelList) {
+        for (final ImStkSptsptModel sptsptModel : imStkSptsptModelList) {
             this.addImStkSptsptModel(sptsptModel);
         }
+    }
+
+    /**
+     * 投資株式株価時系列期間の種類のマップを追加する<br>
+     *
+     * @author KenichiroArai
+     * @sine 1.0.0
+     * @version 1.0.0
+     * @param imStkSptsptMa
+     *                      投資株式株価時系列期間の種類のマップ
+     */
+    @Override
+    public void addImStkSptsptMap(final SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> imStkSptsptMa) {
+        if (KmgMapUtils.isEmpty(imStkSptsptMa)) {
+            return;
+        }
+
+        this.imStkSptsptMap.putAll(imStkSptsptMa);
+
     }
 
     /**
@@ -186,7 +204,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
      */
     @Override
     public SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> getImStkSptsptModelMap() {
-        final SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> result = this.sptsptMap;
+        final SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> result = this.imStkSptsptMap;
         return result;
     }
 
@@ -202,22 +220,7 @@ public class ImStkStockBrandModelImpl implements ImStkStockBrandModel {
      */
     @Override
     public ImStkSptsptModel getImStkSptsptModel(final ImStkPeriodTypeTypes periodTypeTypes) {
-        final ImStkSptsptModel result = this.sptsptMap.get(periodTypeTypes);
+        final ImStkSptsptModel result = this.imStkSptsptMap.get(periodTypeTypes);
         return result;
     }
-
-    /**
-     * 投資株式株価時系列期間の種類モデルのリストとして返す<br>
-     *
-     * @author KenichiroArai
-     * @sine 1.0.0
-     * @version 1.0.0
-     * @return 投資株式株価時系列期間の種類モデルのリスト
-     */
-    @Override
-    public List<ImStkSptsptModel> toImStkSptsptModelList() {
-        final List<ImStkSptsptModel> result = this.sptsptMap.values().stream().collect(Collectors.toList());
-        return result;
-    }
-
 }

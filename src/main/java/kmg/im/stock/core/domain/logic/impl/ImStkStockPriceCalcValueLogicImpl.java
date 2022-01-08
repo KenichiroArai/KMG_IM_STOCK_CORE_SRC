@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.exception.KmgDomainException;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.im.stock.core.data.dao.ImStkStockPriceCalcValueDao;
 import kmg.im.stock.core.data.dto.ImStkStockPriceCalcValueDto;
 import kmg.im.stock.core.data.dto.impl.ImStkStockPriceCalcValueDtoImpl;
@@ -62,7 +63,7 @@ public class ImStkStockPriceCalcValueLogicImpl implements ImStkStockPriceCalcVal
             result = this.imStkStockPriceCalcValueDao.deleteByIdCdAndImStkPeriodTypeTypes(sbId, periodTypeTypes);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);
@@ -97,7 +98,7 @@ public class ImStkStockPriceCalcValueLogicImpl implements ImStkStockPriceCalcVal
             }
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/27 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);

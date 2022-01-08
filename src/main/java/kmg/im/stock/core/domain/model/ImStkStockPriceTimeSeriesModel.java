@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
 
 /**
- * 投資株式勢力指数計算モデル<br>
+ * 投資株式株価時系列モデル<br>
  *
  * @author KenichiroArai
  * @sine 1.0.0

@@ -91,10 +91,10 @@ public interface ImStkStockBrandModel {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param sptsptModel
-     *                    投資株式株価時系列期間の種類モデル
+     * @param imStkSptsptModel
+     *                         投資株式株価時系列期間の種類モデル
      */
-    void addImStkSptsptModel(final ImStkSptsptModel sptsptModel);
+    void addImStkSptsptModel(final ImStkSptsptModel imStkSptsptModel);
 
     /**
      * 投資株式株価時系列期間の種類モデルのリストを全て追加する<br>
@@ -102,10 +102,21 @@ public interface ImStkStockBrandModel {
      * @author KenichiroArai
      * @sine 1.0.0
      * @version 1.0.0
-     * @param sptsptModelList
-     *                        投資株式株価時系列期間の種類モデルのリスト
+     * @param imStkSptsptModelList
+     *                             投資株式株価時系列期間の種類モデルのリスト
      */
-    void addAllImStkSptsptModel(final List<ImStkSptsptModel> sptsptModelList);
+    void addAllImStkSptsptModel(final List<ImStkSptsptModel> imStkSptsptModelList);
+
+    /**
+     * 投資株式株価時系列期間の種類のマップを追加する<br>
+     *
+     * @author KenichiroArai
+     * @sine 1.0.0
+     * @version 1.0.0
+     * @param imStkSptsptMa
+     *                      投資株式株価時系列期間の種類のマップ
+     */
+    void addImStkSptsptMap(SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> imStkSptsptMa);
 
     /**
      * 投資株式株価時系列期間の種類モデルのマップを返す<br>
@@ -128,15 +139,5 @@ public interface ImStkStockBrandModel {
      * @return 投資株式株価時系列期間の種類モデル
      */
     ImStkSptsptModel getImStkSptsptModel(final ImStkPeriodTypeTypes imStkPeriodTypeTypes);
-
-    /**
-     * 投資株式株価時系列期間の種類モデルのリストとして返す<br>
-     *
-     * @author KenichiroArai
-     * @sine 1.0.0
-     * @version 1.0.0
-     * @return 投資株式株価時系列期間の種類モデルのリスト
-     */
-    List<ImStkSptsptModel> toImStkSptsptModelList();
 
 }

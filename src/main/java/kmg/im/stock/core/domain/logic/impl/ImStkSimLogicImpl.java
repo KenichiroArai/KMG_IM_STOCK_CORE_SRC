@@ -7,18 +7,22 @@ import java.util.TreeMap;
 import org.springframework.stereotype.Service;
 
 import kmg.core.infrastructure.exception.KmgDomainException;
+import kmg.core.infrastructure.type.KmgString;
 import kmg.core.infrastructure.utils.KmgListUtils;
 import kmg.im.stock.core.data.dao.ImStkSimDao;
 import kmg.im.stock.core.data.dto.ImStkSimDto;
 import kmg.im.stock.core.domain.logic.ImStkSimLogic;
+import kmg.im.stock.core.domain.model.ImStkSptsptModel;
 import kmg.im.stock.core.domain.model.ImStkStockBrandModel;
 import kmg.im.stock.core.domain.model.ImStkStockPriceCalcValueModel;
 import kmg.im.stock.core.domain.model.ImStkStockPriceTimeSeriesModel;
+import kmg.im.stock.core.domain.model.impl.ImStkSptsptModelImpl;
 import kmg.im.stock.core.domain.model.impl.ImStkStockBrandModelImpl;
 import kmg.im.stock.core.domain.model.impl.ImStkStockPriceCalcValueModelImpl;
 import kmg.im.stock.core.domain.model.impl.ImStkStockPriceTimeSeriesModelImpl;
 import kmg.im.stock.core.infrastructure.exception.ImStkDomainException;
 import kmg.im.stock.core.infrastructure.types.ImStkLogMessageTypes;
+import kmg.im.stock.core.infrastructure.types.ImStkPeriodTypeTypes;
 import kmg.im.stock.core.infrastructure.types.ImStkStockPriceCalcValueTypeTypes;
 
 /**
@@ -64,75 +68,100 @@ public class ImStkSimLogicImpl implements ImStkSimLogic {
         final ImStkStockBrandModel result = new ImStkStockBrandModelImpl();
 
         /* シミュレーションを行うデータを取得する */
-        List<ImStkSimDto> imStkSimDtoList = null;
+        List<ImStkSimDto> acqSimDtoList = null;
         try {
-            imStkSimDtoList = this.imStkSimDao.find(stockCode);
+            acqSimDtoList = this.imStkSimDao.find(stockCode);
         } catch (final KmgDomainException e) {
             // TODO KenichiroArai 2021/06/11 例外処理
-            final String errMsg = "";
+            final String errMsg = KmgString.EMPTY;
             final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
             final Object[] logMsgArg = {};
             throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg, e);
         }
+        if (KmgListUtils.isEmpty(acqSimDtoList)) {
+
+            // TODO KenichiroArai 2022/01/02 例外処理
+            final String errMsg = String.format("シミュレーションを行うデータの取得に失敗しました。株価コード=[%s]", stockCode);
+            final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
+            final Object[] logMsgArg = {};
+            throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg);
+        }
 
         /* 株価銘柄を設定する */
-        if (KmgListUtils.isNotEmpty(imStkSimDtoList)) {
-            final ImStkSimDto imStkSimDto = imStkSimDtoList.get(0);
+        final ImStkSimDto headAcqSimDto = acqSimDtoList.get(0); // 先頭の取得シミュレーションＤＴＯ
+        result.setStockBrandId(headAcqSimDto.getStockBrandId()); // 株銘柄ID
+        result.setStockBrandCode(headAcqSimDto.getStockBrandCode()); // 株価銘柄コード
 
-            result.setStockBrandId(imStkSimDto.getStockBrandId()); // 株銘柄ID
-            result.setStockBrandCode(imStkSimDto.getStockBrandCode()); // 株価銘柄コード
-        }
+        /* 追加用の投資株式株価時系列モデルのマップを作成する */
+        final SortedMap<ImStkPeriodTypeTypes, ImStkSptsptModel> addSptsptMap = new TreeMap<>();
+        for (final ImStkSimDto acqSimDto : acqSimDtoList) {
 
-        /* 株価時系列情報を設定する */
-        final SortedMap<Long, ImStkStockPriceTimeSeriesModel> sptsMap = new TreeMap<>(); // 株価時系列モデルのマップ
-        for (final ImStkSimDto imStkSimDto : imStkSimDtoList) {
+            /* 投資株式期間の種類の種類を取得する */
+            final ImStkPeriodTypeTypes acqPtTypes = ImStkPeriodTypeTypes.getEnum(acqSimDto.getPeriodTypeId());
+            if (acqPtTypes == null) {
 
-            // 株価時系列モデルの取得
-            ImStkStockPriceTimeSeriesModel sptsModel = sptsMap.get(imStkSimDto.getNo());
-            if (sptsModel == null) {
-                // 空の場合
-
-                // 株価時系列情報を設定する
-                sptsModel = new ImStkStockPriceTimeSeriesModelImpl();
-                sptsModel.setId(imStkSimDto.getSptsId()); // 株価時系列ID
-                sptsModel.setName(imStkSimDto.getSptsName()); // 株価時系列名称
-                sptsModel.setNo(imStkSimDto.getNo()); // 番号
-                sptsModel.setPeriodStartDate(imStkSimDto.getPeriodStartDate()); // 期間開始日
-                sptsModel.setPeriodEndDate(imStkSimDto.getPeriodEndDate()); // 期間終了日
-                sptsModel.setOp(imStkSimDto.getOp()); // 始値
-                sptsModel.setHp(imStkSimDto.getHp()); // 高値
-                sptsModel.setLp(imStkSimDto.getLp()); // 安値
-                sptsModel.setCp(imStkSimDto.getCp()); // 終値
-                sptsModel.setVolume(imStkSimDto.getVolume()); // 出来高
-
-                // 株価時系列モデルのマップに追加する
-                sptsMap.put(imStkSimDto.getNo(), sptsModel);
-
-                // 投資株式株銘柄モデルに追加する
-                // TODO KenichiroArai 2021/09/07 株銘柄へのモデル変更対応の一時的エラー回避株銘柄
-//                final PeriodTypeTypes periodTypeTypes = PeriodTypeTypes.getEnum(imStkSimDto.getPeriodTypeId());
-//                result.addData(periodTypeTypes, sptsModel);
+                // TODO KenichiroArai 2022/01/02 例外処理
+                final String errMsg = String.format(
+                    "シミュレーションを行うデータの投資株式期間の種類の種類の取得に失敗しました。株銘柄ID=[%ld], 株価コード=[%s], 株銘柄名称=[%s], 期間の種類ID=[%ld], 期間の種類名称=[%s], 株価時系列ID=[%ld], 株価時系列名称=[%s], 番号=[%ld]",
+                    acqSimDto.getStockBrandId(), stockCode, acqSimDto.getStockBrandName(), acqSimDto.getPeriodTypeId(),
+                    acqSimDto.getPeriodTypeName(), acqSimDto.getSptsId(), acqSimDto.getSptsName(), acqSimDto.getNo());
+                final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
+                final Object[] logMsgArg = {};
+                throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg);
             }
 
-            // 株価計算値を設定する
-            // 投資株式株価計算値の種類の種類を取得する
-            final ImStkStockPriceCalcValueTypeTypes imStkStockPriceCalcValueTypeTypes = ImStkStockPriceCalcValueTypeTypes
-                .getEnum(imStkSimDto.getSpcvtId());
-            // 株価計算値モデルを取得する
-            ImStkStockPriceCalcValueModel spcvModel = sptsModel
-                .getImStkStockPriceCalcValueModel(imStkStockPriceCalcValueTypeTypes);
-            if (spcvModel == null) {
+            /* 追加用の投資株式株価時系列期間の種類モデルを取得する */
+            ImStkSptsptModel addSptsptModel = addSptsptMap.get(acqPtTypes);
+            if (addSptsptModel == null) {
                 // データがない場合
 
-                // 新規に作成
-                spcvModel = new ImStkStockPriceCalcValueModelImpl();
-                sptsModel.addSpcvModel(imStkStockPriceCalcValueTypeTypes, spcvModel);
+                // 新規に作成する
+                addSptsptModel = new ImStkSptsptModelImpl(acqPtTypes);
+                addSptsptMap.put(acqPtTypes, addSptsptModel);
             }
+
+            /* 追加用の投資株式株価時系列モデルを作成する */
+            ImStkStockPriceTimeSeriesModel addSptsModel = addSptsptModel.getSptsModel(acqSimDto.getNo()); // 追加用の投資株式株価時系列モデル
+            if (addSptsModel == null) {
+                addSptsModel = new ImStkStockPriceTimeSeriesModelImpl();
+                addSptsModel.setId(acqSimDto.getSptsId()); // 株価時系列ID
+                addSptsModel.setName(acqSimDto.getSptsName()); // 株価時系列名称
+                addSptsModel.setNo(acqSimDto.getNo()); // 番号
+                addSptsModel.setPeriodStartDate(acqSimDto.getPeriodStartDate()); // 期間開始日
+                addSptsModel.setPeriodEndDate(acqSimDto.getPeriodEndDate()); // 期間終了日
+                addSptsModel.setOp(acqSimDto.getOp()); // 始値
+                addSptsModel.setHp(acqSimDto.getHp()); // 高値
+                addSptsModel.setLp(acqSimDto.getLp()); // 安値
+                addSptsModel.setCp(acqSimDto.getCp()); // 終値
+                addSptsModel.setVolume(acqSimDto.getVolume()); // 出来高
+                addSptsptModel.addSptsModel(addSptsModel);
+            }
+
+            /* 株価計算値を設定する */
+            // 投資株式株価計算値の種類の種類を取得する
+            final ImStkStockPriceCalcValueTypeTypes acqSpcvtTypes = ImStkStockPriceCalcValueTypeTypes
+                .getEnum(acqSimDto.getSpcvtId());
+            if (acqSpcvtTypes == null) {
+
+                // TODO KenichiroArai 2022/01/02 例外処理
+                final String errMsg = String.format(
+                    "シミュレーションを行うデータの投資株式株価計算値の種類の種類の取得に失敗しました。株銘柄ID=[%ld], 株価コード=[%s], 株銘柄名称=[%s], 期間の種類ID=[%ld], 期間の種類名称=[%s], 株価時系列ID=[%ld], 株価時系列名称=[%s], 番号=[%ld]",
+                    acqSimDto.getStockBrandId(), stockCode, acqSimDto.getStockBrandName(), acqSimDto.getPeriodTypeId(),
+                    acqSimDto.getPeriodTypeName(), acqSimDto.getSptsId(), acqSimDto.getSptsName(), acqSimDto.getNo());
+                final ImStkLogMessageTypes logMsgTypes = ImStkLogMessageTypes.NONE;
+                final Object[] logMsgArg = {};
+                throw new ImStkDomainException(errMsg, logMsgTypes, logMsgArg);
+            }
+            // 追加用の株価計算値モデルを作成する
+            final ImStkStockPriceCalcValueModel addSpcvModel = new ImStkStockPriceCalcValueModelImpl();
             // 株価計算値モデルを設定する
-            spcvModel.setSpcvtId(imStkStockPriceCalcValueTypeTypes); // 株価計算値の種類ID
-            spcvModel.setName(imStkSimDto.getSpcvtName()); // 株価計算値の種類名称
-            spcvModel.setCalcValue(imStkSimDto.getCalcValue()); // 計算値
+            addSpcvModel.setSpcvtId(acqSpcvtTypes); // 株価計算値の種類ID
+            addSpcvModel.setName(acqSimDto.getSpcvtName()); // 株価計算値の種類名称
+            addSpcvModel.setCalcValue(acqSimDto.getCalcValue()); // 計算値
+            addSptsModel.addSpcvModel(acqSpcvtTypes, addSpcvModel);
+
         }
+        result.addImStkSptsptMap(addSptsptMap);
 
         return result;
     }
